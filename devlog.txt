@@ -9,6 +9,8 @@ p4 - What Does Your Data Do?
 
 marcJ, kevinW, faizaH, gordonM -- 2023-5-3 22:00
 ------------------------------------------------
+FDBK: part of site map and abstract regarding a feature was unclear. DB organization needed a little explanation. 
+a little vague in some parts.
 - reviewed and revised design doc
 - improved clarity of overall abstract
 - populated design doc w/ examples
