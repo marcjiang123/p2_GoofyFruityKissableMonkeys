@@ -14,10 +14,10 @@ def index():
 
 @app.route("/register")
 def create():
-    if request.method == "GET":
-        return render_template('createAcc.html')
+    if request.method == "POST":
+        return render_template('loginAcc.html')
 
-    return render_template('loginAcc.html')
+    return render_template('createAcc.html')
 
 
 
