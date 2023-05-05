@@ -16,3 +16,9 @@ a little vague in some parts.
 - populated design doc w/ examples
 - increased overall specificity
 ------------------------------------------------
+
+marcJ, kevinW, faizaH, gordonM -- 2023-5-4 13:00
+------------------------------------------------
+- created flask routes for /index and /register
+- created html templates for register and login
+- started SQl methods for account authorization
