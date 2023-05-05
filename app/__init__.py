@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, session
-
+# make this neater later
+from flask import Flask, render_template, request, session, url_for, redirect
+import db
 
 
 app = Flask(__name__)
@@ -10,14 +11,38 @@ totallySecure = {} #This is temporary until DB for passwords
 def index():
     if 'username' in session:
         return render_template('home.html')
-    return render_template('loginAcc.html')
+    return redirect(url_for('login'))
 
 @app.route("/register", methods = ['GET', 'POST'])
 def create():
-    if request.method == 'POST':
-        return render_template('loginAcc.html')
+    
+    # Get request method means go do the form
+    if request.method == 'GET':
+        return render_template('createAcc.html')
 
-    return render_template('createAcc.html')
+    # POST request method means new acc form submitted
+    # get form fields
+    usr = request.form['username']
+    pswd = request.form['password']
+
+    # create usr acc
+    db.add_user(usr, pswd)
+
+    return render_template('loginAcc.html')
+
+@app.route("/login", methods = ['GET', 'POST'])
+def login():
+
+    if request.method == 'GET':
+        return render_template("loginAcc.html")
+
+    usr = request.form['username']
+    pswd = request.form['password']
+
+    if db.check_pass(usr, pswd):
+        session["username"] = usr
+        return render_template('home.html')
+
 
 
 
