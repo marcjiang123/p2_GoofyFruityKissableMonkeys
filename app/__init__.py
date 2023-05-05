@@ -12,9 +12,9 @@ def index():
         return render_template('home.html')
     return render_template('loginAcc.html')
 
-@app.route("/register")
+@app.route("/register", methods = ['GET', 'POST'])
 def create():
-    if request.method == "POST":
+    if request.method == 'POST':
         return render_template('loginAcc.html')
 
     return render_template('createAcc.html')
