@@ -4,7 +4,7 @@ import db
 
 
 app = Flask(__name__)
-totallySecure = {} #This is temporary until DB for passwords
+app.secret_key = "hjakdskajsdflkasjdflid"
 
 @app.route("/")
 @app.route("/index")
