@@ -23,3 +23,14 @@ marcJ, kevinW, faizaH, gordonM -- 2023-5-4 13:00
 - created flask routes for /index and /register
 - created html templates for register and login
 - started SQl methods for account authorization
+
+marcJ, faizaH, gordonM -- 2023-5-5 13:00
+------------------------------------------------
+- created flask routes for /register and /login
+- DB tables and methods to add users
+- created API keys for Alpaca
+
+marcJ, kevinW, faizaH, gordonM -- 2023-5-8 13:00
+------------------------------------------------
+- planned out home page layout
+- fixed rerouting of urls (to be more consistent)
