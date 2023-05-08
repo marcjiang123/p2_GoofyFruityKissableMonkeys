@@ -161,3 +161,4 @@ cython_debug/
 
 key_alpaca.txt
 secret_alpaca.txt
+.csv
