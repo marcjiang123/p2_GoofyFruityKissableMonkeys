@@ -15,6 +15,7 @@ a little vague in some parts.
 - improved clarity of overall abstract
 - populated design doc w/ examples
 - increased overall specificity
+- testing integration with google charts
 ------------------------------------------------
 
 marcJ, kevinW, faizaH, gordonM -- 2023-5-4 13:00
