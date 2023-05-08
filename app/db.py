@@ -10,6 +10,8 @@ db = sqlite3.connect(DB_FILE, check_same_thread = False)
 c = db.cursor()
 db.executescript("""
 CREATE TABLE if not exists userbase(username text, password text, wins int, losses int, recents text);
+CREATE TABLE if not exists avocadoData(date text, avg_price real, total_volume real, small real, medium real, large real, 
+total_bags real, small_bags real, large_bags real, xlarge_bags real, type text, year int, geography text);
 """)
 c.close()
 
