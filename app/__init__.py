@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = "hjakdskajsdflkasjdflid"
 
 @app.route("/")
-@app.route("/index")
+@app.route("/home")
 def index():
     if 'username' in session:
         return render_template('home.html')
@@ -41,7 +41,7 @@ def login():
 
     if db.check_pass(usr, pswd):
         session["username"] = usr
-        return render_template('home.html')
+        return redirect(url_for('index'))
 
 
 
