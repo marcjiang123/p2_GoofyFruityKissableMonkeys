@@ -37,4 +37,19 @@ def check_pass(username, password):
     c.close()
     return password == input_pass
 
-    
+def get_column_names():
+    c = db.cursor()
+    table = c.execute('select * from avocadoData')
+    names = list(map(lambda x: x[0], table.description))
+    c.close()
+    return names
+
+def table_insert(column, value):
+    c = db.cursor() 
+    c.execute(f'INSERT into avocadoData({column}) values(?)', value)
+    db.commit()
+    c.close()
+
+table_insert("date",10/10/10)
+
+#def add_data():

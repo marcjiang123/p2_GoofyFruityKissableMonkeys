@@ -9,13 +9,14 @@ from db import *
 avocado_file = open("avocado_dataset.csv", "r")
 content = avocado_file.read()
 #print(content)
-new_content = content.split("\n")
-for i in range(len(new_content)-1):
-    row = new_content[i+1].split(",")
-    
-#print(new_content[1].split(","))
 
-library = {"average_price":[],
-"year":[]
-}
+def populate():
+    new_content = content.split("\n")
+    for i in range(len(new_content)-1):
+        values = new_content[i+1].split(",")
+        table = get_column_names()
+        for i in range(len(row)-1):
+            table_insert(table[i], values[i])
 
+populate()
+#print(new_content[1].split(",")[0])
