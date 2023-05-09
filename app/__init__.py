@@ -43,8 +43,16 @@ def login():
         session["username"] = usr
         return redirect(url_for('index'))
 
+@app.route("/log-out", methods = ['GET', 'POST'])
+def logout():
+    if 'username' in session:
+        session.pop('username', None)
+        return redirect(url_for('index'))
+    return render_template("error.html")
 
-
+@app.route("/higher-Lower", methods = ['GET', 'POST'])
+def game():
+    return render_template("higherLower.html")
 
 if __name__ == "__main__":
     app.debug = True
