@@ -8,6 +8,7 @@ DB_FILE = "back.db"
 
 db = sqlite3.connect(DB_FILE, check_same_thread = False)
 c = db.cursor()
+db.execute("DROP TABLE if exists avocadoData")
 db.executescript("""
 CREATE TABLE if not exists userbase(username text, password text, wins int, losses int, recents text);
 CREATE TABLE if not exists avocadoData(date text, avg_price real, total_volume real, small real, medium real, large real, 
@@ -46,10 +47,12 @@ def get_column_names():
 
 def table_insert(column, value):
     c = db.cursor() 
-    c.execute(f'INSERT into avocadoData({column}) values(?)', value)
+    cmd = f'INSERT into avocadoData ({column}) VALUES(?)'
+    #print(cmd)
+    c.execute(cmd, (value,))
     db.commit()
     c.close()
 
-#table_insert("date",10/10/10)
+#table_insert("date", "10/10/10")
 
 #def add_data():

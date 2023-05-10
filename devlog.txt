@@ -35,3 +35,8 @@ marcJ, kevinW, faizaH, gordonM -- 2023-5-8 13:00
 - planned out home page layout
 - fixed rerouting of urls (to be more consistent)
 - home page without any css
+
+gordonM -- 2023-5-10 12:16
+------------------------------------------------
+- working on populating the database with dataset, not working as of this vers
+- DATA CONDUIT: retrieve data from database, which would be in a JSON format, then using jinja we feed it in JS. 
