@@ -50,6 +50,6 @@ def table_insert(column, value):
     db.commit()
     c.close()
 
-table_insert("date",10/10/10)
+#table_insert("date",10/10/10)
 
 #def add_data():
