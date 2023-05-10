@@ -40,3 +40,8 @@ gordonM -- 2023-5-10 12:16
 ------------------------------------------------
 - working on populating the database with dataset, not working as of this vers
 - DATA CONDUIT: retrieve data from database, which would be in a JSON format, then using jinja we feed it in JS. 
+
+marcJ -- 2023-5-10 12:20
+------------------------------------------------
+- imported package to help with getting random stock tickers
+- added launch code instructions + requirements.txt
