@@ -44,7 +44,7 @@ Scripts\activate.bat
 ```
 pip install -r ../requirements.txt
 ```
-6. Finally you can navigate to the app folder with "`cd ..`" and run it with
+6. Finally you can navigate to the app folder with "`cd ../app`" and run it with
 ```
 python3 __init__.py
 ```

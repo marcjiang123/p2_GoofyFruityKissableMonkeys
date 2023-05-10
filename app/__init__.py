@@ -1,10 +1,15 @@
 # make this neater later
 from flask import Flask, render_template, request, session, url_for, redirect
+from stocksymbol import StockSymbol
 import db
 
 
 app = Flask(__name__)
 app.secret_key = "hjakdskajsdflkasjdflid"
+
+ss = StockSymbol('9625612b-526c-4289-af96-076826ab74a2')
+symbol_list = ss.get_symbol_list(market='US',symbols_only=True)
+#print(symbol_list)
 
 @app.route("/")
 @app.route("/home")
