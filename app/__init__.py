@@ -14,6 +14,7 @@ symbol_list = ss.get_symbol_list(market='US',symbols_only=True)
 @app.route("/")
 @app.route("/home")
 def index():
+    return render_template('home.html')
     if 'username' in session:
         return render_template('home.html')
     return redirect(url_for('login'))

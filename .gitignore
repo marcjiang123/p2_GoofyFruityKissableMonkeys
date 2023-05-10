@@ -163,4 +163,5 @@ key_alpaca.txt
 secret_alpaca.txt
 avocado_dataset.csv
 *.db
+.db
 tofr
