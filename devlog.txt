@@ -46,6 +46,17 @@ marcJ -- 2023-5-10 12:20
 - imported package to help with getting random stock tickers
 - added launch code instructions + requirements.txt
 
+kevinW -- 2023-5-10 12:20
+------------------------------------------------
+- attempted to fix db
+- started working on navbar css
+
+kevinW -- 2023-5-10 17:34
+------------------------------------------------
+- finished simple bootstrap navbar
+- choose color scheme
+
+
 gordonM -- 2023-5-10 1:11
 ------------------------------------------------
 - populated the database with dataset
