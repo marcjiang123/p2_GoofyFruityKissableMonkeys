@@ -15,8 +15,8 @@ def populate():
     for i in range(len(new_content)-1):
         values = new_content[i+1].split(",")
         table = get_column_names()
-        for i in range(len(row)-1):
+        for i in range(len(values)-1):
             table_insert(table[i], values[i])
 
-populate()
+#populate()
 #print(new_content[1].split(",")[0])
