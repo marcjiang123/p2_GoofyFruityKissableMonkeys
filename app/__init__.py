@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, session, url_for, redirect
 from stocksymbol import StockSymbol
 import db
 
-
 app = Flask(__name__)
 app.secret_key = "hjakdskajsdflkasjdflid"
 
@@ -57,7 +56,8 @@ def logout():
 
 @app.route("/higher-Lower", methods = ['GET', 'POST'])
 def game():
-    return render_template("higherLower.html")
+    stock = symbol_list[random.randint(0, len(symbol_list)-1)]
+    return render_template("higherLower.html", stock=stock)
 
 if __name__ == "__main__":
     app.debug = True
