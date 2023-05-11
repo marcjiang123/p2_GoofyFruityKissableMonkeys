@@ -4,61 +4,31 @@
   <title>
     Homepage
   </title>
-</head>
-
-<body>
-
-  <nav>
-    <div>
-
-      <img width="100px" height="100px"
-        src="https://static.vecteezy.com/system/resources/previews/009/397/811/original/fresh-avocado-clipart-design-illustration-free-png.png" />
-    </div>
-    <ul>
-
-      <li>Higher or lower</li>
-      <li>search</li>
-      <li>Leaderboard</li>
-    </ul>
-    <div>
-
-      <p>
-      <form method="GET" action="/log-out">
-        <button type="submit">
-          Log Out
-        </button>
-      </form>
-
-      <form method="GET" action="/home">
-        <button type="submit">
-          Home
-        </button>
-      </form>
-      </p>
-    </div>
-  </nav>
-
-  <main>
-    <p>
-      Which is higher?
-    </p>
-    <div>
-      <div>
-        <p>
-          Avocados in houston during the 6 month period starting from 11/18/18
-        </p>
-
-        <img width="100px" height="100px"
-          src="https://ih1.redbubble.net/image.2140926795.0280/st,small,845x845-pad,1000x1000,f8f8f8.jpg" />
-
-      </div>
-
-      <div>
-        <p>
-          Apple during the 6 month period starting from 11/18/18
-        </p>
-        {{stock}}
-        <img width="100px" height="100px" src="https://techcrunch.com/wp-content/uploads/2012/11/apple-stock1.jpg" />
+  </head>
+  
+  <body>
+  
+    {% include 'navbar.html' %}
+    
+    <main>
+       <p>
+         Which is higher?
+       </p>
+       <div>
+         <div>
+           <p>
+             Avocados in houston during the 6 month period starting from 11/18/18
+           </p>
+         
+           <img width="100px" height= "100px" src="https://ih1.redbubble.net/image.2140926795.0280/st,small,845x845-pad,1000x1000,f8f8f8.jpg"/>
+         
+         </div>
+         
+         <div>
+                  <p>
+           Apple during the 6 month period starting from 11/18/18
+         </p>
+           <img width="100px" height= "100px" src="https://techcrunch.com/wp-content/uploads/2012/11/apple-stock1.jpg"/>
 
 
       </div>

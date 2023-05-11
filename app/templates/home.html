@@ -7,29 +7,7 @@
   </head>
   
   <body>
-  
-    <nav>
-      <div>
-      
-        <img width="100px" height= "100px" src="https://static.vecteezy.com/system/resources/previews/009/397/811/original/fresh-avocado-clipart-design-illustration-free-png.png"/>
-      </div>
-      <ul>
-      
-        <li>Higher or lower</li>
-        <li>search</li>
-        <li>Leaderboard</li>
-      </ul>
-      <div>
-      
-        <p>
-          <form method="GET" action="/log-out">
-            <button type="submit">
-              Log Out
-            </button>
-          </form>
-        </p>
-      </div>
-    </nav>
+    {% include 'navbar.html' %}
     
     <main>
       <form action="/search" method="POST">
