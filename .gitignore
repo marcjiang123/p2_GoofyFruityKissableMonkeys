@@ -162,5 +162,5 @@ cython_debug/
 key_alpaca.txt
 secret_alpaca.txt
 avocado_dataset.csv
-*.db
+app/*.db
 tofr
