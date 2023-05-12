@@ -19,7 +19,7 @@
                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
                 <div class="card-body p-4 p-lg-5 text-black">
 
-                    <form>
+                    <form action="/login" method="POST">
 
                     <div class="d-flex align-items-center mb-3 pb-1">
                         <img class="m-1" src="https://static.vecteezy.com/system/resources/previews/009/397/811/original/fresh-avocado-clipart-design-illustration-free-png.png" width="30px" />
@@ -44,10 +44,11 @@
                     </div>
 
                     <div class="pt-1 mb-4">
-                        <button class="btn btn-primary btn-lg " type="button">Login</button>
+                        <button class="btn btn-primary btn-lg " type="submit">Login</button>
                     </div>
 
                     <p class="mb-5 pb-lg-2" style="color: #356211;">Don't have an account? <a href="/register" style="color: #356211;">Register here</a></p>
+                    {{error}}
                     </form>
 
                 </div>
