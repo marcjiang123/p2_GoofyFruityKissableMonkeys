@@ -70,3 +70,7 @@ marcJ -- 2023-5-12 00:57
 - fixed bugs and made methods to account for error in db.py (check_pass,user_exists)
 - added error messages for login
 - routed bootstrap forms to the correct flask route for login
+
+kevinW -- 2023-5-11 12:20
+------------------------------------------------
+- register page css, styling
