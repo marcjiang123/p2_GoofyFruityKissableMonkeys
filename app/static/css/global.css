@@ -28,3 +28,11 @@ p {
 .btn-outline-primary:hover {
     background: #6C8F32 !important;
 }
+
+.btn-primary {
+    background: #6C8F32 !important;
+}
+  
+.btn-primary:hover {
+    background: #AA471F !important;
+}
