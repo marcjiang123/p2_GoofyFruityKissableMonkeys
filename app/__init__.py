@@ -63,6 +63,10 @@ def game():
     stock = symbol_list[random.randint(0, len(symbol_list)-1)]
     return render_template("higherLower.html", stock=stock)
 
+@app.route("/leaderboard", methods = ['GET'])
+def board():
+    return render_template("leaderboard.html")
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
