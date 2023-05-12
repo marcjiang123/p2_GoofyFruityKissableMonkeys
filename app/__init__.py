@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request, session, url_for, redirect
 from stocksymbol import StockSymbol
 import db
+import random
 
 app = Flask(__name__)
 app.secret_key = "hjakdskajsdflkasjdflid"
@@ -13,7 +14,6 @@ symbol_list = ss.get_symbol_list(market='US',symbols_only=True)
 @app.route("/")
 @app.route("/home")
 def index():
-    return render_template('home.html')
     if 'username' in session:
         return render_template('home.html')
     return redirect(url_for('login'))
@@ -33,7 +33,7 @@ def create():
     # create usr acc
     db.add_user(usr, pswd)
 
-    return render_template('loginAcc.html')
+    return render_template('loginAcc.html', error="")
 
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
@@ -44,9 +44,12 @@ def login():
     usr = request.form['username']
     pswd = request.form['password']
 
-    if db.check_pass(usr, pswd):
-        session["username"] = usr
-        return redirect(url_for('index'))
+    if request.method == 'POST':
+        if db.check_pass(usr, pswd):
+            session["username"] = usr
+            return redirect(url_for('index'))
+        else:
+            return render_template("loginAcc.html", error="Incorrect username or password")
 
 @app.route("/log-out", methods = ['GET', 'POST'])
 def logout():

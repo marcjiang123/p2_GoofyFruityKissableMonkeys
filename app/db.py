@@ -20,6 +20,8 @@ def user_exists(username):
     c = db.cursor()
     name = c.execute("Select username from userbase where username = ?", (str(username),))
     exists = name.fetchone() is not None #returns true if user EXISTS
+    if exists == None:
+        return False
     c.close()
     return exists
 
@@ -33,10 +35,15 @@ def add_user(username, password):
 
 def check_pass(username, password):
     c = db.cursor()
-    c.execute('select password from userbase where (username = ? )', (str(username), ))
-    input_pass = c.fetchone()[0]
+    input_pass = c.execute('select password from userbase where (username = ? )', (str(username), )).fetchone()
+    # row = c.fetchone()
+    if input_pass == None:
+        return False
+    # input_pass = row[0]
+    print(input_pass)
+    print(password)
     c.close()
-    return password == input_pass
+    return password == input_pass[0]
 
 def get_column_names():
     c = db.cursor()
