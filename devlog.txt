@@ -74,3 +74,4 @@ marcJ -- 2023-5-12 00:57
 kevinW -- 2023-5-11 12:20
 ------------------------------------------------
 - register page css, styling
+- navbar further styling
