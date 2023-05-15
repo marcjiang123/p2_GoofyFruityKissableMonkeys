@@ -58,3 +58,23 @@ def populate(csv_contents):
     db.commit()
     c.close()
 #def add_data():
+
+def get_date():
+    c = db.cursor()
+    date_price = c.execute("select date, avg_price from avocadoData").fetchall()
+    #print(dates[0][0])
+    c.close()
+    return date_price
+
+#print(get_date()[0][1]) #prints price
+
+def update_win_lose(username, result):
+    c = db.cursor()
+    if(result == "win"):
+        wins = c.execute("SELECT wins from userbase where (username = ?)", (str(username),))
+        c.execute("INSERT into userbase (wins) values(?)", (wins + 1,))
+    else:
+        losses = c.execute("SELECT losses from userbase where (username = ?)", (str(username),))
+        c.execute("INSERT into userbase (losses) values(?)", (losses + 1,))
+    db.commit()
+    c.close()

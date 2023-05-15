@@ -12,7 +12,7 @@ avocado_file = open("avocado_dataset.csv", "r")
 #content = avocado_file.read()
 #print(content)
 
-contents = csv.reader(avocado_file)
+contents = csv.reader(avocado_file,  delimiter=',')
 print(contents)
 
 populate(contents)
