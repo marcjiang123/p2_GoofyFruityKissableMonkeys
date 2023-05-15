@@ -3,13 +3,13 @@ from flask import Flask, render_template, request, session, url_for, redirect
 from stocksymbol import StockSymbol
 import db
 import random
+import requests
 
 app = Flask(__name__)
 app.secret_key = "hjakdskajsdflkasjdflid"
 
 ss = StockSymbol('9625612b-526c-4289-af96-076826ab74a2')
-symbol_list = ss.get_symbol_list(market='US',symbols_only=True)
-#print(symbol_list)
+symbol_list = ss.get_symbol_list(index='SPX')
 
 @app.route("/")
 @app.route("/home")
@@ -60,8 +60,20 @@ def logout():
 
 @app.route("/higher-Lower", methods = ['GET', 'POST'])
 def game():
-    stock = symbol_list[random.randint(0, len(symbol_list)-1)]
-    return render_template("higherLower.html", stock=stock)
+    stock = symbol_list[random.randint(0, len(symbol_list)-1)]['longName']
+    print(stock)
+    searchUrl = f"https://api.brandfetch.io/v2/search/{stock}"
+
+    SearchHeaders = {
+        "accept": "application/json",
+        "Referer": "http://127.0.0.1:5000/higher-Lower?"
+    }
+
+    SearchResponse = requests.get(searchUrl, headers=SearchHeaders)
+
+    logo = SearchResponse.json()[0]['icon']
+    print(SearchResponse.json()[0]['name'])
+    return render_template("higherLower.html", stock=stock,logo=logo)
 
 if __name__ == "__main__":
     app.debug = True
