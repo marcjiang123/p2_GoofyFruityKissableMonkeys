@@ -13,6 +13,7 @@ db.executescript("""
 CREATE TABLE if not exists userbase(username text, password text, wins int, losses int, recents text);
 CREATE TABLE if not exists avocadoData(date text, avg_price real, total_volume real, small real, medium real, large real, 
 total_bags real, small_bags real, large_bags real, xlarge_bags real, type text, year int, geography text);
+INSERT into userbase values("avocado","avocado",0,0,"");
 """)
 c.close()
 
@@ -78,3 +79,13 @@ def update_win_lose(username, result):
         c.execute("INSERT into userbase (losses) values(?)", (losses + 1,))
     db.commit()
     c.close()
+
+def get_price(date):
+    c = db.cursor()
+    prices = c.execute("SELECT date from avocadoData where date >= ?", (str(date),)).fetchall()
+    print(prices)
+    c.close()
+    return prices
+
+#get_price("2020-11-29")
+#print("2020-11-29" >= "2020-12-07")
