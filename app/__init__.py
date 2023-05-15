@@ -75,6 +75,10 @@ def game():
     print(SearchResponse.json()[0]['name'])
     return render_template("higherLower.html", stock=stock,logo=logo)
 
+@app.route("/leaderboard", methods = ['GET'])
+def board():
+    return render_template("leaderboard.html")
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
