@@ -75,3 +75,7 @@ kevinW -- 2023-5-11 12:20
 ------------------------------------------------
 - register page css, styling
 - navbar further styling
+
+marcJ -- 2023-5-14 22:40
+------------------------------------------------
+- managed to get stock symbol + brandfetch api to work (with some error cases TB worked out)
