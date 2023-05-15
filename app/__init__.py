@@ -70,7 +70,6 @@ def game():
     }
 
     SearchResponse = requests.get(searchUrl, headers=SearchHeaders)
-
     logo = SearchResponse.json()[0]['icon']
     print(SearchResponse.json()[0]['name'])
     return render_template("higherLower.html", stock=stock,logo=logo)
