@@ -11,7 +11,7 @@ c = db.cursor()
 #db.execute("DROP TABLE if exists avocadoData")
 db.executescript("""
 CREATE TABLE if not exists userbase(username text, password text, wins int, losses int, recents text);
-CREATE TABLE if not exists avocadoData(date text, avg_price real, total_volume real, small real, medium real, large real, 
+CREATE TABLE if not exists avocadoData(date date, avg_price real, total_volume real, small real, medium real, large real, 
 total_bags real, small_bags real, large_bags real, xlarge_bags real, type text, year int, geography text);
 INSERT into userbase values("avocado","avocado",0,0,"");
 """)
@@ -82,10 +82,19 @@ def update_win_lose(username, result):
 
 def get_price(date):
     c = db.cursor()
-    prices = c.execute("SELECT date from avocadoData where date >= ?", (str(date),)).fetchall()
-    print(prices)
+    prices = c.execute("SELECT avg_price from avocadoData where date >= ?", (str(date),)).fetchall()
+    #print(prices)
     c.close()
     return prices
 
+def get_random_date():
+    c = db.cursor()
+    date = c.execute("select date from avocadoData order by random() LIMIT 1").fetchone()
+    c.close()
+    return date[0]
+
+print(get_random_date())
+
 #get_price("2020-11-29")
+print(get_price(get_random_date()))
 #print("2020-11-29" >= "2020-12-07")
