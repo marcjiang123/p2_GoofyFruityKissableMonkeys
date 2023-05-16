@@ -103,4 +103,4 @@ def get_random_date():
 
 def update_recents(username, search):
     c = db.cursor()
-    c.execute("INSERT into userbase values(?) where (username = ?)", ()
+    c.execute("INSERT into userbase values(?) where (username = ?)", ())
