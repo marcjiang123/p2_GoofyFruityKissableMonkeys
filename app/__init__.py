@@ -4,6 +4,7 @@ from stocksymbol import StockSymbol
 import db
 import random
 import requests
+import os
 
 app = Flask(__name__)
 app.secret_key = "hjakdskajsdflkasjdflid"
@@ -60,20 +61,16 @@ def logout():
 
 @app.route("/higher-Lower", methods = ['GET', 'POST'])
 def game():
-    stock = symbol_list[random.randint(0, len(symbol_list)-1)]['longName']
-    print(stock)
-    searchUrl = f"https://api.brandfetch.io/v2/search/{stock}"
-
-    SearchHeaders = {
-        "accept": "application/json",
-        "Referer": "http://127.0.0.1:5000/higher-Lower?"
-    }
-
-    SearchResponse = requests.get(searchUrl, headers=SearchHeaders)
-
-    logo = SearchResponse.json()[0]['icon']
-    print(SearchResponse.json()[0]['name'])
-    return render_template("higherLower.html", stock=stock,logo=logo)
+    valid = False
+    while not valid:
+        stock = symbol_list[random.randint(0, len(symbol_list)-1)]
+        stockTicker = stock['symbol']
+        #print(stockName)
+        if os.path.exists(f'./app/static/logos/{stockTicker}.png'):
+            logo = f'./static/logos/{stockTicker}.png'
+            stockName = stock['longName']
+            valid = True
+    return render_template("higherLower.html", stock=stockName,logo=logo)
 
 @app.route("/leaderboard", methods = ['GET'])
 def board():
@@ -81,4 +78,4 @@ def board():
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(port = 9999)
+    app.run()
