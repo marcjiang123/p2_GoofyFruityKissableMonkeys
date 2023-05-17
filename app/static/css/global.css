@@ -17,14 +17,11 @@ nav {
   background: #558303;
 }
 
-html, body {
-    background: #F2E880;
+html, body, container {
+    background: #F2E880 !important;
 }
 
 
-p {
-    color: white;
-}
 
 .btn-outline-primary {
     color: #356211 !important;
@@ -43,3 +40,16 @@ p {
 .btn-primary:hover {
     background: #6C8F32 !important;
 }
+
+.dark-maroon {
+  color: #AA471F
+}
+
+.dark-green {
+  color: #356211;
+}
+
+.images:hover {
+  cursor: pointer
+}
+

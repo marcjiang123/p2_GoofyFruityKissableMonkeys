@@ -79,3 +79,15 @@ kevinW -- 2023-5-11 12:20
 marcJ -- 2023-5-14 22:40
 ------------------------------------------------
 - managed to get stock symbol + brandfetch api to work (with some error cases TB worked out)
+
+kevinW -- 2023-5-15 12:20
+------------------------------------------------
+- started on higher or lower page styling
+
+kevinW -- 2023-5-16 12:20
+------------------------------------------------
+- completed design for higher or lower page
+
+kevinW -- 2023-5-17 12:20
+------------------------------------------------
+- show graph onclick for the higher or lower page
