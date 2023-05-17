@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+    Homepage
+  </title>
+  </head>
+  
+  <body>
+    {% include 'navbar.html' %}
+    
+    <main>
+      <form action="/search" method="POST">
+
+        <input type="text" name="stock" placeholder="stock ticker">
+
+        <button type="submit">
+            Search
+        </button>
+    </form>
+    <br>
+    <form method="GET" action="/higher-Lower">
+      <button type="submit">
+        Play game
+      </button>
+    </form>
+    
+        <div>
+        
+           <div>
+           
+             <h3>
+             
+               Last 5 stocks
+             </h3>
+             <ul>
+               <li>APPLE</li>
+               <li>GOOGLE</li>
+               <li>FACEBOOK</li>
+               <li>AMAZON</li>
+               <li>PIAZZA</li>
+             </ul>
+           </div>
+        </div>
+    </main>
+  </body>
+</html>
