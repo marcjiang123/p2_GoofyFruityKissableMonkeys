@@ -10,12 +10,13 @@ db = sqlite3.connect(DB_FILE, check_same_thread = False)
 c = db.cursor()
 #db.execute("DROP TABLE if exists avocadoData")
 db.executescript("""
+DROP TABLE if exists userbase;
 CREATE TABLE if not exists userbase(username text, password text, wins int, losses int, recents text);
 CREATE TABLE if not exists avocadoData(date date, avg_price real, total_volume real, small real, medium real, large real, 
 total_bags real, small_bags real, large_bags real, xlarge_bags real, type text, year int, geography text);
 CREATE TABLE if not exists stonks(ticker text, company_name text, short_name text, industry text, description text, website text, logo text,
 ceo text, exchange text, market_cap int);
-INSERT into userbase values("avocado","avocado",0,0,"");
+INSERT into userbase values("avocado","avocado",0,0,"[]");
 """)
 c.close()
 
@@ -75,10 +76,10 @@ def update_win_lose(username, result):
     c = db.cursor()
     if(result == "win"):
         wins = c.execute("SELECT wins from userbase where (username = ?)", (str(username),))
-        c.execute("INSERT into userbase (wins) values(?)", (wins + 1,))
+        c.execute("INSERT into userbase (wins) values(?) where (username = ?)", (wins + 1, str(username)))
     else:
         losses = c.execute("SELECT losses from userbase where (username = ?)", (str(username),))
-        c.execute("INSERT into userbase (losses) values(?)", (losses + 1,))
+        c.execute("INSERT into userbase (losses) values(?) where (username = ?)", (losses + 1, str(username)))
     db.commit()
     c.close()
 
@@ -103,4 +104,16 @@ def get_random_date():
 
 def update_recents(username, search):
     c = db.cursor()
-    c.execute("INSERT into userbase values(?) where (username = ?)", ())
+    recents = c.execute("SELECT recents from userbase where (username = ?)", (str(username),)).fetchone()
+    list = recents[0]
+    list.insert(0,search)
+    if (len(list) > 5):
+        list.pop(5)
+    c.execute("INSERT into userbase(recents) values(?) where (username = ?)", (list, str(username)))
+    db.commit()
+    c.close()
+
+#update_recents("avocado", "blob")
+#list = []
+#list.append("blob")
+#print(list)
