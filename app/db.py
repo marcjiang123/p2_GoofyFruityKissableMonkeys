@@ -117,3 +117,10 @@ def update_recents(username, search):
 #list = []
 #list.append("blob")
 #print(list)
+
+def geography_sort(location, convention):
+    c = db.cursor()
+    date_price = c.execute("SELECT date, avg_price, total_volume, small_bags, medium_bags, large_bags from avocadoData WHERE (geography = ?) AND (type = ?)", (str(location), str(convention))).fetchall()
+    c.close()
+    return date_price
+
