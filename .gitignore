@@ -161,6 +161,7 @@ cython_debug/
 
 key_alpaca.txt
 secret_alpaca.txt
+avocado_dataset.csv
 app/*.db
 app/back.db
 back.db
