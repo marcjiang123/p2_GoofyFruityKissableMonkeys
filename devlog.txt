@@ -91,3 +91,11 @@ kevinW -- 2023-5-16 12:20
 kevinW -- 2023-5-17 12:20
 ------------------------------------------------
 - show graph onclick for the higher or lower page
+
+faizaH -- 2023-5-18 17:20
+------------------------------------------------
+- Summary of tour:
+- Only one other group is doing things related to stock: module used -> Yahoo Finance
+- A lot groups are using maps in their projects
+- Some travellers needed help with connecting back end to js
+    - Told em about our strategy and directed them to our group for more info.
