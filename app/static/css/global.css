@@ -53,3 +53,10 @@ html, body, container {
   cursor: pointer
 }
 
+#main-chart {
+  height: 300px; 
+}
+
+#secondary-charts div {
+  height: 300px;
+}
