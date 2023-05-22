@@ -19,7 +19,7 @@ symbol_list = ss.get_symbol_list(index='SPX')
 @app.route("/home")
 def index():
     if 'username' in session:
-        return render_template('home.html')
+        return render_template('home.html', testparam= "new Date(2021, 3, 1)")
     return redirect(url_for('login'))
 
 @app.route("/register", methods = ['GET', 'POST'])
@@ -110,6 +110,10 @@ def game():
 @app.route("/leaderboard", methods = ['GET'])
 def board():
     return render_template("leaderboard.html")
+
+@app.route("/search", methods = ['GET'])
+def search():
+    return render_template("search.html")
 
 if __name__ == "__main__":
     app.debug = True

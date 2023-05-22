@@ -105,3 +105,15 @@ faizaH -- 2023-5-18 17:20
 - A lot groups are using maps in their projects
 - Some travellers needed help with connecting back end to js
     - Told em about our strategy and directed them to our group for more info.
+
+
+kevinW -- 2023-5-19 12:20
+------------------------------------------------
+- improve upon graphs for home page
+
+
+kevinW -- 2023-5-21 21:00
+------------------------------------------------
+- create search page
+- home page selection functionality
+- leaderboard page

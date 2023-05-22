@@ -3,6 +3,11 @@ google.charts.setOnLoadCallback(drawPriceChart);
 google.charts.setOnLoadCallback(drawVolumeChart);
 google.charts.setOnLoadCallback(drawBagsChart);
 
+console.log("hi")
+function test(testparam) {
+  console.log("what")
+  console.log(testparam)
+}
 function drawPriceChart() {
   var data = new google.visualization.DataTable();
   data.addColumn('date', 'Date');
@@ -55,31 +60,7 @@ function drawVolumeChart() {
   chart.draw(data, options);
 }
 
-function drawPriceChart() {
-  var data = new google.visualization.DataTable();
-  data.addColumn('date', 'Date');
-  data.addColumn('number', 'Avocado');
 
-  data.addRows([
-    [new Date (2016, 8, 6), 2.3],
-    [new Date (2016, 8, 13), 6.43],
-    [new Date (2016, 8, 20), 4],
-    [new Date (2016, 8, 27), 5],
-  ]);
-
-  var options = {
-    title: 'AVOCADO VOLUME',
-    curveType: 'function',
-    colors: ['#568203'],
-    legend: { position: 'bottom' },
-    hAxis: { format: "MM/dd/yy"}
-
-  };
-
-  var chart = new google.visualization.LineChart(document.getElementById('main-chart'));
-
-  chart.draw(data, options);
-}
 
 function drawBagsChart() {
   var data = new google.visualization.DataTable();
@@ -108,3 +89,19 @@ function drawBagsChart() {
 
   chart.draw(data, options);
 }
+
+//get the two select params and when they change, redirect user
+//to the new url with the new params
+
+var select1 = document.getElementById("place");
+var select2 = document.getElementById("convention");
+
+function onChangeSelectors() {
+  var place = select1.options[select1.selectedIndex].value;
+  var convention = select2.options[select2.selectedIndex].value;
+  window.location.href = "/home" + "?place=" + place + "&convention=" + convention;
+}
+
+select1.addEventListener("change", onChangeSelectors);
+select2.addEventListener("change", onChangeSelectors);
+
