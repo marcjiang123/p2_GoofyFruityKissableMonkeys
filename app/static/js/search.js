@@ -12,14 +12,6 @@ function drawChart() {
     [new Date (2016, 8, 20), 1.04, 1.12],
     [new Date (2016, 8, 27), 1.05, 1],
   ]);
-  /*
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'AVOCADO', 'APPLE'],
-          [Date(2011, 0, 1),  1,      1],
-          [Date(2011, 0, 2),  0.99,      1.15],
-          [Date(2011, 0, 3),  1.04,       1.12],
-          [Date(2011, 0, 4),  1.05,      1]
-        ]);*/
 
   var options = {
     title: 'AVOCADO vs APPLE INC',

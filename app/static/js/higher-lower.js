@@ -1,10 +1,15 @@
 google.charts.load('current', {'packages':['corechart']});
 
-function drawChart() {
+//avocado is a boolean
+//if they clicked avocado, then true
+//if they clicked the other stock, then false
+function whenClicked(stock,avocado_data,stock_data, location, avocado_type) {
   var data = new google.visualization.DataTable();
-  data.addColumn('date', 'Dato');
-  data.addColumn('number', 'Avocado');
-  data.addColumn('number', 'Apple');
+  var avocadoName = `${location} ${avocado_type} Avocados`
+
+  data.addColumn('date', 'Date');
+  data.addColumn('number', avocadoName);
+  data.addColumn('number', stock);
 
   data.addRows([
     [new Date (2016, 8, 6), 1, 1],
@@ -12,17 +17,10 @@ function drawChart() {
     [new Date (2016, 8, 20), 1.04, 1.12],
     [new Date (2016, 8, 27), 1.05, 1],
   ]);
-  /*
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'AVOCADO', 'APPLE'],
-          [Date(2011, 0, 1),  1,      1],
-          [Date(2011, 0, 2),  0.99,      1.15],
-          [Date(2011, 0, 3),  1.04,       1.12],
-          [Date(2011, 0, 4),  1.05,      1]
-        ]);*/
 
+  //{{location}} {{avocado_type}} Avocados
   var options = {
-    title: 'AVOCADO vs APPLE INC',
+    title: `${avocadoName} vs ${stock}`,
     curveType: 'function',
     colors: ['#568203', '#a52714'],
     legend: { position: 'bottom' },
@@ -36,12 +34,6 @@ function drawChart() {
   var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
   chart.draw(data, options);
-}
 
-function initialize () {
-	document.getElementById("avocado-image").
-    $(/* click event element selector */).click(function() {
-        drawChart();
-    });
+
 }
-google.setOnLoadCallback(initialize);
