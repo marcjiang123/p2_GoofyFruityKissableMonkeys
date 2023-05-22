@@ -60,3 +60,7 @@ html, body, container {
 #secondary-charts div {
   height: 300px;
 }
+
+.colname {
+  background: #C15C37 !important;
+}
