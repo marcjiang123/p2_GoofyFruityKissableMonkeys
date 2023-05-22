@@ -5,7 +5,9 @@ import db
 import random
 import requests
 import os
-import populate
+import json
+import pandas as pd
+import yfinance as yf
 
 app = Flask(__name__)
 app.secret_key = "hjakdskajsdflkasjdflid"
@@ -63,19 +65,47 @@ def logout():
 @app.route("/higher-Lower", methods = ['GET', 'POST'])
 def game():
     if request.method == 'GET':
-        valid = False
-        while not valid:
+        
+        date = db.get_random_date()
+        start_date = db.get_start_date(date)
+    
+        invalid = True
+        while invalid:
             stock = symbol_list[random.randint(0, len(symbol_list)-1)]
             stockTicker = stock['symbol']
             #print(stockName)
             if os.path.exists(f'./app/static/logos/{stockTicker}.png'):
                 logo = f'./static/logos/{stockTicker}.png'
                 stockName = stock['longName']
-                valid = True
+                stock_download = yf.download(stockTicker, start=start_date, end=date, interval='1wk', prepost=False)
+                if stock_download.empty == False:
+                    invalid = False
         
-        date = db.get_random_date()
+        while 1:
+            if date.split("-")[0] == "2015" and (int(date.split("-")[1]) < 7):
+                date = db.get_random_date()
+            else:
+                break
         print(date)
-        return render_template("higherLower.html", stock=stockName,logo=logo)
+
+        location = db.get_random_location()
+        if random.randint(0,1) == 0:
+            avo_type = "organic"
+        else:
+            avo_type = "conventional"
+        avo_data = json.dumps(db.get_price_range(date,location,avo_type))
+
+        beginning_date = start_date
+        stock_download = json.loads(yf.download(stockTicker, start=start_date, end=date, interval='1wk', prepost=False).to_json(orient='records'))
+        #print(stock_download)
+        compare_price = stock_download[0]['Close']
+        stock_prices = {}
+        for day in stock_download:
+            stock_prices[start_date] = day['Close'] / compare_price
+            start_date = db.get_next_date(start_date)
+        stock_prices = json.dumps(stock_prices)
+        #print(stock_prices)
+        return render_template("higherLower.html", stock=stockName,logo=logo,avocado_data=avo_data,stock_data=stock_prices,start_date=beginning_date, end_date=date, location=location, avocado_type=avo_type)
 
 @app.route("/leaderboard", methods = ['GET'])
 def board():

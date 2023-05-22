@@ -92,7 +92,7 @@ def get_price(date):
 
 def get_random_date():
     c = db.cursor()
-    date = c.execute("select date from avocadoData order by random() LIMIT 1").fetchone()
+    date = c.execute("select date from avocadoData order by random() LIMIT 1 ").fetchone()
     c.close()
     return date[0]
 
@@ -124,3 +124,43 @@ def geography_sort(location, convention):
     c.close()
     return date_price
 
+def get_next_date(date):
+    c = db.cursor()
+    next_date = c.execute("SELECT date from avocadoData WHERE date > ? order by date asc limit 1", (str(date),)).fetchone()
+    c.close()
+    return next_date[0]
+
+def get_start_date(date):
+    start_year = date.split("-")[0] 
+    start_month = str(int(date.split("-")[1]) - 6)
+    if int(start_month) < 0:
+        start_month = str(int(start_month) + 12)
+        start_year = str(int(start_year) - 1)
+    if len(start_month) == 1:
+        start_month = "0" + start_month
+    start_date = start_year + "-" + start_month + "-" + str(int(date.split("-")[2]) - 1)
+    start_date = get_next_date(start_date)
+    return start_date
+
+def get_price_range(date, location, type):
+    c = db.cursor()
+    valid = True
+    start_date = get_start_date(date)
+    compare_date = start_date
+    compare_price = c.execute("SELECT avg_price from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(compare_date),location,type)).fetchone()[0]
+    price_change = {}
+    while valid:
+        price = c.execute("SELECT avg_price from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()
+        price_change[start_date] = price[0] / compare_price
+        start_date = get_next_date(start_date)
+        print(start_date)
+        if start_date == date:
+            valid = False
+    c.close()
+    return price_change
+
+def get_random_location():
+    c = db.cursor()
+    location = c.execute("select geography from avocadoData order by random() LIMIT 1 ").fetchone()
+    c.close()
+    return location[0]
