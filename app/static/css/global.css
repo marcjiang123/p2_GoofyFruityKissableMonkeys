@@ -64,3 +64,11 @@ html, body, container {
 .colname {
   background: #C15C37 !important;
 }
+
+.compare-graph {
+  height: 500px;
+}
+
+h1 {
+  margin-bottom: 0 !important;
+}

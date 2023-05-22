@@ -111,6 +111,10 @@ def game():
 def board():
     return render_template("leaderboard.html")
 
+@app.route("/search", methods = ['GET'])
+def search():
+    return render_template("search.html")
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
