@@ -89,3 +89,19 @@ function drawBagsChart() {
 
   chart.draw(data, options);
 }
+
+//get the two select params and when they change, redirect user
+//to the new url with the new params
+
+var select1 = document.getElementById("place");
+var select2 = document.getElementById("convention");
+
+function onChangeSelectors() {
+  var place = select1.options[select1.selectedIndex].value;
+  var convention = select2.options[select2.selectedIndex].value;
+  window.location.href = "/home" + "?place=" + place + "&convention=" + convention;
+}
+
+select1.addEventListener("change", onChangeSelectors);
+select2.addEventListener("change", onChangeSelectors);
+
