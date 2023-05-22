@@ -5,6 +5,7 @@ import db
 import random
 import requests
 import os
+import populate
 
 app = Flask(__name__)
 app.secret_key = "hjakdskajsdflkasjdflid"
@@ -16,7 +17,7 @@ symbol_list = ss.get_symbol_list(index='SPX')
 @app.route("/home")
 def index():
     if 'username' in session:
-        return render_template('home.html')
+        return render_template('home.html', testparam= "new Date(2021, 3, 1)")
     return redirect(url_for('login'))
 
 @app.route("/register", methods = ['GET', 'POST'])

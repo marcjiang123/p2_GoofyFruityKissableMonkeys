@@ -3,6 +3,11 @@ google.charts.setOnLoadCallback(drawPriceChart);
 google.charts.setOnLoadCallback(drawVolumeChart);
 google.charts.setOnLoadCallback(drawBagsChart);
 
+console.log("hi")
+function test(testparam) {
+  console.log("what")
+  console.log(testparam)
+}
 function drawPriceChart() {
   var data = new google.visualization.DataTable();
   data.addColumn('date', 'Date');
@@ -55,31 +60,7 @@ function drawVolumeChart() {
   chart.draw(data, options);
 }
 
-function drawPriceChart() {
-  var data = new google.visualization.DataTable();
-  data.addColumn('date', 'Date');
-  data.addColumn('number', 'Avocado');
 
-  data.addRows([
-    [new Date (2016, 8, 6), 2.3],
-    [new Date (2016, 8, 13), 6.43],
-    [new Date (2016, 8, 20), 4],
-    [new Date (2016, 8, 27), 5],
-  ]);
-
-  var options = {
-    title: 'AVOCADO VOLUME',
-    curveType: 'function',
-    colors: ['#568203'],
-    legend: { position: 'bottom' },
-    hAxis: { format: "MM/dd/yy"}
-
-  };
-
-  var chart = new google.visualization.LineChart(document.getElementById('main-chart'));
-
-  chart.draw(data, options);
-}
 
 function drawBagsChart() {
   var data = new google.visualization.DataTable();
