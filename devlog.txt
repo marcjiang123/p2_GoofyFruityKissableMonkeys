@@ -88,6 +88,11 @@ kevinW -- 2023-5-16 12:20
 ------------------------------------------------
 - completed design for higher or lower page
 
+marcJ -- 2023-5-16 13:30
+------------------------------------------------
+- ditched brandfetch api for company logos and instead downloaded folder of images from dataset
+- pictures are a lot higher quality, way faster page loads and less errors
+
 kevinW -- 2023-5-17 12:20
 ------------------------------------------------
 - show graph onclick for the higher or lower page
@@ -111,9 +116,18 @@ kevinW -- 2023-5-19 12:20
 ------------------------------------------------
 - improve upon graphs for home page
 
+marcJ -- 2023-5-20 24:00
+------------------------------------------------
+- created methods to get percent change of prices from random timeframes for both stocks and avocados
+- decided to ditch Alpaca API and instead use Yahoo Finance + Pandas module since it was A LOT easier to get stock data (plus no query limits)
+- update requirements.txt for pandas and yfinance
 
 kevinW -- 2023-5-21 21:00
 ------------------------------------------------
 - create search page
 - home page selection functionality
 - leaderboard page
+
+marcJ -- 2023-5-21 22:00
+------------------------------------------------
+- create methods to parse db and get data for graphs on home page (filtered by location, type)
