@@ -159,6 +159,51 @@ def get_price_range(date, location, type):
     c.close()
     return price_change
 
+def get_all_volume(location,type):
+    c = db.cursor()
+    start_date = "2015-01-04"
+    valid = True
+    volume = {}
+    while valid:
+        volume[start_date] = c.execute("SELECT total_volume from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()[0]
+        start_date = get_next_date(start_date)
+        if start_date == None:
+            valid = False
+    return volume
+
+def get_volume_years(location,type):
+    c = db.cursor()
+    start_date = "2015-01-04"
+    start_year = start_date.split("-")[0]
+    valid = True
+    volume = {}
+    yearSum = 0
+    while valid:
+        yearSum += c.execute("SELECT total_volume from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()[0]
+        if get_next_date(start_date).split("-")[0] != start_year:
+            volume[start_year] = yearSum
+            yearSum = 0
+            start_year = get_next_date(start_date).split("-")[0]
+        start_date = get_next_date(start_date)
+        if start_date == None:
+            valid = False
+    return volume
+
+def get_bags(location,type):
+    c = db.cursor()
+    start_date = "2015-01-04"
+    valid = True
+    bags = [{},{},{}]
+    while valid:
+        query = c.execute("SELECT small_bags, medium_bags, large_bags from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()
+        bags[0][start_date] = query[0]
+        bags[1][start_date] = query[1]
+        bags[2][start_date] = query[2]
+        start_date = get_next_date(start_date)
+        if start_date == None:
+            valid = False
+    return bags
+
 def get_random_location():
     c = db.cursor()
     location = c.execute("select geography from avocadoData order by random() LIMIT 1 ").fetchone()
