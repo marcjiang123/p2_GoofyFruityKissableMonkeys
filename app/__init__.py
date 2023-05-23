@@ -19,7 +19,34 @@ symbol_list = ss.get_symbol_list(index='SPX')
 @app.route("/home")
 def index():
     if 'username' in session:
-        return render_template('home.html', testparam= "new Date(2021, 3, 1)")
+
+        date = "2015-01-04"
+        start_date = db.get_start_date(date)
+
+        while 1:
+            if date.split("-")[0] == "2015" and (int(date.split("-")[1]) < 7):
+                date = db.get_random_date()
+            else:
+                break
+        print(date)
+
+        location = request.args.get('place')
+        avo_type = request.args.get('convention')
+        beginning_date = start_date
+
+        print(location)
+        print(avo_type)
+
+        if location == None:
+            print("HEAD EMPTY")
+            location = "Houston"
+            avo_type = "organic"
+
+        avo_data = json.dumps(db.get_price_range(date,location,avo_type))
+        print("HELLO???")
+        print(avo_data)
+
+        return render_template('home.html', avoPrice = avo_data, loc = location, avo_type = avo_type)
     return redirect(url_for('login'))
 
 @app.route("/register", methods = ['GET', 'POST'])
@@ -101,6 +128,9 @@ def game():
         compare_price = stock_download[0]['Close']
         stock_prices = {}
         for day in stock_download:
+            if(start_date == "2020-11-29"):
+                stock_prices[start_date] = day['Close'] / compare_price
+                break
             stock_prices[start_date] = day['Close'] / compare_price
             start_date = db.get_next_date(start_date)
         stock_prices = json.dumps(stock_prices)

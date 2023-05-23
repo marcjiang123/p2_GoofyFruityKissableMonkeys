@@ -1,5 +1,14 @@
+var place = "Houston";
+var conv = "Organic";
+var avoPrice = document.getElementById("avoPrice").innerHTML;
+
+var place = document.getElementById("place").innerHTML;
+var conv = document.getElementById("convention").innerHTML;
+
 google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawPriceChart);
+console.log("first time?")
+google.charts.setOnLoadCallback(drawPriceChart, place, conv, avoPrice);
+console.log("It worked?")
 google.charts.setOnLoadCallback(drawVolumeChart);
 google.charts.setOnLoadCallback(drawBagsChart);
 
@@ -8,20 +17,21 @@ function test(testparam) {
   console.log("what")
   console.log(testparam)
 }
-function drawPriceChart() {
+
+function drawPriceChart(avocado_type, location, avoData) {
   var data = new google.visualization.DataTable();
   data.addColumn('date', 'Date');
   data.addColumn('number', 'Avocado');
 
-  data.addRows([
-    [new Date (2016, 8, 6), 2.3],
-    [new Date (2016, 8, 13), 6.43],
-    [new Date (2016, 8, 20), 4],
-    [new Date (2016, 8, 27), 5],
-  ]);
+  //Loop thru the data and add said rows
+  dates = Object.keys(avoPrice)
+  console.log(dates)
+  for (i in dates) {
+    data.addRows([[new Date(dates[i]), avoData[dates[i]]]])
+  }
 
   var options = {
-    title: 'AVOCADO PRICES',
+    title: 'AVOCADO PRICES: ' + avocado_type + 'in ' + location,
     curveType: 'function',
     colors: ['#AA471F'],
     legend: { position: 'bottom' },
@@ -96,11 +106,23 @@ function drawBagsChart() {
 var select1 = document.getElementById("place");
 var select2 = document.getElementById("convention");
 
+
 function onChangeSelectors() {
-  var place = select1.options[select1.selectedIndex].value;
-  var convention = select2.options[select2.selectedIndex].value;
+  place = select1.options[select1.selectedIndex].value;
+  convention = select2.options[select2.selectedIndex].value;
+  var avoPrice = document.getElementById("avoPrice").innerHTML;
+  drawPriceChart(convention, place, avoPrice)
   window.location.href = "/home" + "?place=" + place + "&convention=" + convention;
 }
+
+// function onLoadSelectors() {
+//   var place = select1.options[select1.selectedIndex].value;
+//   var convention = select2.options[select2.selectedIndex].value;
+//   drawPriceChart(convention, place, avoPrice)
+//   window.location.href = "/home" + "?place=" + place + "&convention=" + convention;
+// }
+
+//select1.addEventListener("load", onLoadSelectors)
 
 select1.addEventListener("change", onChangeSelectors);
 select2.addEventListener("change", onChangeSelectors);
