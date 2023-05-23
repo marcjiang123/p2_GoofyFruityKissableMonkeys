@@ -72,3 +72,11 @@ html, body, container {
 h1 {
   margin-bottom: 0 !important;
 }
+
+.maroon-background {
+  background: #C15C37 !important;
+}
+
+.dark-maroon-background {
+  background: #AA471F !important;
+}

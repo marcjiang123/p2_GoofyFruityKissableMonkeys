@@ -32,7 +32,9 @@ async function whenClicked(stock,avocado_data,stock_data, location, avocado_type
     colors: ['#568203', '#a52714'],
     legend: { position: 'bottom' },
     vAxis: {
-      format: 'percent'
+      format: 'percent',
+      title: '% gain',
+      ticks: [0.5, 0.75, 1, 1.25, 1.5]
     },
     hAxis: { format: "MM/dd/yy"}
 
@@ -64,16 +66,14 @@ async function whenClicked(stock,avocado_data,stock_data, location, avocado_type
       window.location.assign(window.location.origin + `/you-lost?score=${score}`);
     }
   }
-  
 
 
 }
 
 
 function determineRightWrong(userGuess, avocado_data, stock_data) {
-
   lastAvocadoPrice = avocado_data[Object.keys(avocado_data)[Object.keys(avocado_data).length - 1]];
   lastStockPrice = stock_data[Object.keys(stock_data)[Object.keys(stock_data).length - 1]];
-  console.log(userGuess, lastAvocadoPrice, lastStockPrice)
+
   return userGuess == (lastAvocadoPrice > lastStockPrice);
 }
