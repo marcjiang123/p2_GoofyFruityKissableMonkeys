@@ -209,3 +209,17 @@ def get_random_location():
     location = c.execute("select geography from avocadoData order by random() LIMIT 1 ").fetchone()
     c.close()
     return location[0]
+
+def get_leaderboard():
+    c = db.cursor()
+    values = c.execute("SELECT username, wins, losses from userbase ORDER by wins DESC").fetchall()
+    c.close()
+    return values
+
+#print(get_leaderboard())
+
+def get_location_all():
+    c = db.cursor()
+    location = c.execute("select geography from avocadoData").fetchall()
+    c.close()
+    return location

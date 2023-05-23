@@ -24,21 +24,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>32</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>17</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>6</td>
-      </tr>
+      {% for username, wins, losses in data%}
+            <tr>
+            <td>{{loop.index}}</td>
+            <td>{{username}}</td>
+            <td>{{wins - losses}}</td>
+            </tr>
+            {% endfor %}
     </tbody>
   </table>
 
