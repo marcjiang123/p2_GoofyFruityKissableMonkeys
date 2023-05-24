@@ -2,7 +2,7 @@ var place = "Houston";
 var conv = "Organic";
 
 var avoPrice = JSON.parse(document.getElementById("avoPrice").innerHTML);
-// var avoVolume = JSON.parse(document.getElementById("avoVolume").innerHTML);
+var avoVolume = JSON.parse(document.getElementById("avoVolume").innerHTML);
 place = document.getElementById("place").innerHTML;
 conv = document.getElementById("convention").innerHTML;
 
@@ -43,17 +43,19 @@ function drawPriceChart(avocado_type, location, avoData) {
   chart.draw(data, options);
 }
 
-function drawVolumeChart() {
+function drawVolumeChart(volData) {
   var data = new google.visualization.DataTable();
   data.addColumn('date', 'Date');
   data.addColumn('number', 'Avocado');
 
-  data.addRows([
-    [new Date (2016, 8, 6), 2.3],
-    [new Date (2016, 8, 13), 6.43],
-    [new Date (2016, 8, 20), 4],
-    [new Date (2016, 8, 27), 5],
-  ]);
+  dates = Object.keys(avoVolume);
+  console.log(dates);
+  for (var i = 0; i < dates.length; i++) {
+    var date = dates[i];
+    var vol = avoVolume[date];
+    data.addRow([new Date(date), vol]);
+
+  }
 
   var options = {
     title: 'AVOCADO VOLUME',
@@ -131,10 +133,10 @@ function onChangeSelectors() {
       jsonny = JSON.stringify(json)
       jsonny = JSON.parse(jsonny)
       avoPrice = JSON.parse(jsonny["avoPrice"])
-      // avoVolume = JSON.parse(jsonny["avoVolume"])
+      avoVolume = JSON.parse(jsonny["avoVolume"])
       console.log(avoPrice)
       drawPriceChart(convention, place, avoPrice);
-      // drawVolumeChart(avoVolume);
+      drawVolumeChart(avoVolume);
   }).catch(error => {
       console.log('error with access token req!')
   });
