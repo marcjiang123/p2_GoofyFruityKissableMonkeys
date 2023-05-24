@@ -3,25 +3,44 @@
 <main>
     <div class="container mt-5">
 
-        <h1>
-            YOU LOST!!!
-        </h1>
+        {% if score > old_score %}
+            <h1>
+                YOU LOST!!! BUT YOU BEAT YOUR HIGHSCORE!!!
+            </h1>
+        {% else %}
+            <h1>
+                YOU LOST!!!
+            </h1>
+        {% endif %}
     
         <div>
             You got a score of {{score}}
         </div>
 
         <div>
-            Your highscore: {{highscore}}
+            Previous highscore: {{old_score}}
         </div>
+        <br>
+        {% if score > old_score %}
+            <div>
+                You beat your highscore!
+            </div>
+        {% else %}
+            <div>
+                You didn't even beat your highscore.
+            </div>
+        {% endif %}
 
         <br>
         
         <a href="/higher-Lower">Play again</a>
         <br>
         <a href="/home">Go home</a>
-
-        <img src="https://emojis.wiki/thumbs/emojis/loudly-crying-face.webp" class="mt-5 w-100"/>
-    </div>
-
+        
+        {% if score > old_score %}
+            <img src="https://t4.ftcdn.net/jpg/04/48/02/35/360_F_448023511_zvZBPpPKc2Yv7H0ZFaNtJpPx6VVJpIxB.jpg" class="mt-5 w-100"/>
+        {% else %}
+            <img src="https://emojis.wiki/thumbs/emojis/loudly-crying-face.webp" class="mt-5 w-100"/>
+        {% endif %}
+        
 </main>

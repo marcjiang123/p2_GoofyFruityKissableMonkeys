@@ -16,7 +16,7 @@ CREATE TABLE if not exists avocadoData(date date, avg_price real, total_volume r
 total_bags real, small_bags real, large_bags real, xlarge_bags real, type text, year int, geography text);
 CREATE TABLE if not exists stonks(ticker text, company_name text, short_name text, industry text, description text, website text, logo text,
 ceo text, exchange text, market_cap int);
-INSERT into userbase values("avocado","avocado", 20,"[]");
+INSERT into userbase values("avocado","avocado", 0,"[]");
 """)
 c.close()
 
@@ -73,16 +73,16 @@ def get_date():
 #print(get_date()[0][1]) #prints price
 
 def update_win_lose(username, result):
-
     c = db.cursor()
-    old_score = c.execute("SELECT score from userbase where (username = ?)", (str(username),)).fetchone()
+    old_score = c.execute("SELECT score from userbase where (username = ?)", (str(username),)).fetchone()[0]
+    print(old_score)
     if (old_score >= result):
         c.close()
-        return null
     else:
-        c.execute("INSERT into userbase (score) values(?) where (username = ?)", (score, str(username)))
+        c.execute("UPDATE userbase SET score = (?) where (username = ?)", (result, str(username)))
     db.commit()
     c.close()
+    return old_score
 
 def get_price(date):
     c = db.cursor()
@@ -245,7 +245,7 @@ def get_random_location():
 
 def get_leaderboard():
     c = db.cursor()
-    values = c.execute("SELECT username, score from userbase ORDER by wins DESC").fetchall()
+    values = c.execute("SELECT username, score from userbase ORDER by score DESC").fetchall()
     c.close()
     return values
 

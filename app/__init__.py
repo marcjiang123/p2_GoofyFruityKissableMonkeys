@@ -22,8 +22,6 @@ symbol_list = ss.get_symbol_list(index='SPX')
 @app.route("/")
 @app.route("/home", methods=['GET', 'POST'])
 def index():
-    print(session.get("username"))
-    print("hi")
     if 'username' in session:
 
         date = "2015-01-04"
@@ -34,7 +32,6 @@ def index():
                 date = db.get_random_date()
             else:
                 break
-        print(date)
 
         location = "Houston"
         avo_type = "organic"
@@ -57,8 +54,6 @@ def index():
             avo_data = json.dumps(db.get_price_range(date,location,avo_type, False))
             avo_vol = json.dumps(db.get_all_volume(location,avo_type))
             avo_bag = json.dumps(db.get_bags(location,avo_type))
-            print("HELLO???")
-            print(avo_data)
 
             return jsonify(allplaces = allplaces, loc=location, avoType=avo_type, avoPrice=avo_data, avoVolume = avo_vol, avoBaggage = avo_bag)
 
@@ -69,7 +64,7 @@ def index():
         #print("HELLO???")
         #print(avo_data)
 
-        return render_template('home.html', allplaces = allplaces, avoPrice = avo_data, loc = location, avo_type = avo_type, avoVolume = avo_vol, avoBaggage = avo_bag)
+        return render_template('home.html', username = session["username"], allplaces = allplaces, avoPrice = avo_data, loc = location, avo_type = avo_type, avoVolume = avo_vol, avoBaggage = avo_bag)
     return redirect(url_for('login'))
 
 @app.route("/register", methods = ['GET', 'POST'])
@@ -211,9 +206,9 @@ def lost():
     #get score from querystring
     score = int(request.args.get('score'))
     print(session.get("username"))
-    db.update_win_lose(session.get("username"), score)
-
-    return render_template("lost.html", score=score)
+    old_score = db.update_win_lose(session.get("username"), score)
+    print(old_score)
+    return render_template("lost.html", score=score, old_score=int(old_score))
 
 if __name__ == "__main__":
     app.debug = True
