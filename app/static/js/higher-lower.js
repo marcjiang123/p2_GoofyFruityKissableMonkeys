@@ -1,33 +1,40 @@
 google.charts.load('current', {'packages':['corechart']});
 
-function drawChart() {
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+//avocado is a boolean
+//if they clicked avocado, then true
+//if they clicked the other stock, then false
+async function whenClicked(stock,avocado_data,stock_data, location, avocado_type, avocado) {
   var data = new google.visualization.DataTable();
-  data.addColumn('date', 'Dato');
-  data.addColumn('number', 'Avocado');
-  data.addColumn('number', 'Apple');
+  var avocadoName = `${location} ${avocado_type} Avocados`
 
-  data.addRows([
-    [new Date (2016, 8, 6), 1, 1],
-    [new Date (2016, 8, 13), 0.99, 1.15],
-    [new Date (2016, 8, 20), 1.04, 1.12],
-    [new Date (2016, 8, 27), 1.05, 1],
-  ]);
-  /*
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'AVOCADO', 'APPLE'],
-          [Date(2011, 0, 1),  1,      1],
-          [Date(2011, 0, 2),  0.99,      1.15],
-          [Date(2011, 0, 3),  1.04,       1.12],
-          [Date(2011, 0, 4),  1.05,      1]
-        ]);*/
+  var x = new URLSearchParams(window.location.search);
+  
+  data.addColumn('date', 'Date');
+  data.addColumn('number', avocadoName);
+  data.addColumn('number', stock);
 
+  var dates = Object.keys(avocado_data);
+
+  for (var i = 0; i < dates.length; i++) {
+    var date = dates[i];
+
+    var avocadoPrice = avocado_data[date];
+    var stockPrice = stock_data[date];
+
+    data.addRow([new Date(date), avocadoPrice, stockPrice]);
+  }
+  
   var options = {
-    title: 'AVOCADO vs APPLE INC',
+    title: `${avocadoName} vs ${stock}`,
     curveType: 'function',
     colors: ['#568203', '#a52714'],
     legend: { position: 'bottom' },
     vAxis: {
-      format: 'percent'
+      format: 'percent',
+      title: '% gain',
+      ticks: [0.5, 0.75, 1, 1.25, 1.5]
     },
     hAxis: { format: "MM/dd/yy"}
 
@@ -36,12 +43,37 @@ function drawChart() {
   var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
   chart.draw(data, options);
+  
+  await delay(2000)
+
+  var right = determineRightWrong(avocado, avocado_data, stock_data);
+  const urlParams = new URLSearchParams(window.location.search);
+  const score = urlParams.get('score');
+  console.log(avocado)
+  if (right) {
+    alert("You got it right!")
+    if (score == null) {
+      window.location.assign(window.location.origin + `/higher-Lower?score=1`);
+    } else {
+      window.location.assign(window.location.origin + `/higher-Lower?score=${parseInt(score) + 1}`);
+    }
+  
+  } else {
+    alert("WRONG!!!")
+    if (score == null) {
+      window.location.assign(window.location.origin + `/you-lost?score=0`);
+    } else {
+      window.location.assign(window.location.origin + `/you-lost?score=${score}`);
+    }
+  }
+
+
 }
 
-function initialize () {
-	document.getElementById("avocado-image").
-    $(/* click event element selector */).click(function() {
-        drawChart();
-    });
+
+function determineRightWrong(userGuess, avocado_data, stock_data) {
+  lastAvocadoPrice = avocado_data[Object.keys(avocado_data)[Object.keys(avocado_data).length - 1]];
+  lastStockPrice = stock_data[Object.keys(stock_data)[Object.keys(stock_data).length - 1]];
+
+  return userGuess == (lastAvocadoPrice > lastStockPrice);
 }
-google.setOnLoadCallback(initialize);

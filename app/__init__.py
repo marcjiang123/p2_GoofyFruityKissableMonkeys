@@ -1,5 +1,5 @@
 # make this neater later
-from flask import Flask, render_template, request, session, url_for, redirect
+from flask import Flask, render_template, request, session, url_for, redirect, jsonify
 from stocksymbol import StockSymbol
 import db
 import random
@@ -20,13 +20,50 @@ ss = StockSymbol(stockKey)
 symbol_list = ss.get_symbol_list(index='SPX')
 
 @app.route("/")
-@app.route("/home")
+@app.route("/home", methods=['GET', 'POST'])
 def index():
-    if request.method == 'GET':
-        if 'username' in session:
+    if 'username' in session:
 
-            return render_template('home.html', testparam= "new Date(2021, 3, 1)")
-    
+        date = "2015-01-04"
+        start_date = db.get_start_date(date)
+
+        while 1:
+            if date.split("-")[0] == "2015" and (int(date.split("-")[1]) < 7):
+                date = db.get_random_date()
+            else:
+                break
+        print(date)
+
+        location = "Houston"
+        avo_type = "organic"
+
+        beginning_date = start_date
+
+        if request.method == "POST":
+            print("HELLO Faiza")
+
+            requestDict = request.form['json']
+            requestDict = json.loads(requestDict)
+
+
+            location = requestDict["place"]
+            avo_type = requestDict['convention']
+
+            avo_data = json.dumps(db.get_price_range(date,location,avo_type))
+            avo_vol = json.dumps(db.get_all_volume(location,avo_type))
+            print("HELLO???")
+            print(avo_data)
+
+            return jsonify(loc=location, avoType=avo_type, avoPrice=avo_data, avoVolume = avo_vol)
+
+        avo_data = json.dumps(db.get_price_range(date,location,avo_type))
+        print(db.get_all_volume("Houston","organic"))
+        avo_vol = json.dumps(db.get_all_volume(location,avo_type))
+        avo_bag = json.dumps(db.get_bags(location,avo_type))
+        #print("HELLO???")
+        #print(avo_data)
+
+        return render_template('home.html', avoPrice = avo_data, loc = location, avo_type = avo_type, avoVolume = avo_vol)
     return redirect(url_for('login'))
 
 @app.route("/register", methods = ['GET', 'POST'])
@@ -107,6 +144,9 @@ def game():
         compare_price = stock_download[0]['Close']
         stock_prices = {}
         for day in stock_download:
+            if(start_date == "2020-11-29"):
+                stock_prices[start_date] = day['Close'] / compare_price
+                break
             stock_prices[start_date] = day['Close'] / compare_price
             start_date = db.get_next_date(start_date)
         stock_prices = json.dumps(stock_prices)
@@ -115,7 +155,8 @@ def game():
 
 @app.route("/leaderboard", methods = ['GET'])
 def board():
-    return render_template("leaderboard.html")
+    data = db.get_leaderboard()
+    return render_template("leaderboard.html", data=data)
 
 @app.route("/search", methods = ['GET'])
 def search():
@@ -158,6 +199,22 @@ def search():
     else:
         s_change = "up"
     return render_template("search.html", stock=stock_name,stock_data=stock_prices,avocado_data=total_avo_data,logo=logo,avo_change=abs(avo_change),a_change=a_change,s_change=s_change,stock_change=abs(stock_change))
+
+@app.route("/you-lost", methods = ['GET'])
+def lost():
+    #get score from querystring
+    score = int(request.args.get('score'))
+    update_win_lose(session["username"], score)
+
+    return render_template("lost.html", score=score)
+
+@app.route("/you-lost", methods = ['GET'])
+def lost():
+    #get score from querystring
+    score = int(request.args.get('score'))
+    update_win_lose(session["username"], score)
+
+    return render_template("lost.html", score=score)
 
 if __name__ == "__main__":
     app.debug = True

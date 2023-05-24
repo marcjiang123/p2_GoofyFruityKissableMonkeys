@@ -11,12 +11,12 @@ c = db.cursor()
 #db.execute("DROP TABLE if exists avocadoData")
 db.executescript("""
 DROP TABLE if exists userbase;
-CREATE TABLE if not exists userbase(username text, password text, wins int, losses int, recents text);
+CREATE TABLE if not exists userbase(username text, password text, score int, recents text);
 CREATE TABLE if not exists avocadoData(date date, avg_price real, total_volume real, small real, medium real, large real, 
 total_bags real, small_bags real, large_bags real, xlarge_bags real, type text, year int, geography text);
 CREATE TABLE if not exists stonks(ticker text, company_name text, short_name text, industry text, description text, website text, logo text,
 ceo text, exchange text, market_cap int);
-INSERT into userbase values("avocado","avocado",0,0,"[]");
+INSERT into userbase values("avocado","avocado", 20,"[]");
 """)
 c.close()
 
@@ -33,7 +33,7 @@ def user_exists(username):
 
 def add_user(username, password):
     c = db.cursor()
-    c.execute("Insert into userbase values(?,?,?,?,?)", (str(username), str(password),0,0,""))
+    c.execute("Insert into userbase values(?,?,?,?)", (str(username), str(password),0,""))
     db.commit()
     c.close()
 
@@ -74,12 +74,12 @@ def get_date():
 
 def update_win_lose(username, result):
     c = db.cursor()
-    if(result == "win"):
-        wins = c.execute("SELECT wins from userbase where (username = ?)", (str(username),))
-        c.execute("INSERT into userbase (wins) values(?) where (username = ?)", (wins + 1, str(username)))
+    old_score = c.execute("SELECT score from userbase where (username = ?)", (str(username),)).fetchone()
+    if (old_score >= result):
+        c.close()
+        return null
     else:
-        losses = c.execute("SELECT losses from userbase where (username = ?)", (str(username),))
-        c.execute("INSERT into userbase (losses) values(?) where (username = ?)", (losses + 1, str(username)))
+        c.execute("INSERT into userbase (score) values(?) where (username = ?)", (score, str(username)))
     db.commit()
     c.close()
 
@@ -180,12 +180,19 @@ def get_total_price():
 
 def get_all_volume(location,type):
     c = db.cursor()
-    start_date = "2015-01-04"
+    start_date = get_start_date(get_start_date("2020-11-29"))
     valid = True
     volume = {}
     while valid:
-        volume[start_date] = c.execute("SELECT total_volume from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()[0]
-        start_date = get_next_date(start_date)
+        if start_date == None:
+            valid = False
+        print(str(start_date), location, type)
+        prices = c.execute("SELECT total_volume from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()
+        if prices:
+            volume[start_date] = prices[0]
+            start_date = get_next_date(start_date)
+        else:
+            break
     return volume
 
 def get_volume_years(location,type):
@@ -226,3 +233,17 @@ def get_random_location():
     location = c.execute("select geography from avocadoData order by random() LIMIT 1 ").fetchone()
     c.close()
     return location[0]
+
+def get_leaderboard():
+    c = db.cursor()
+    values = c.execute("SELECT username, score from userbase ORDER by wins DESC").fetchall()
+    c.close()
+    return values
+
+#print(get_leaderboard())
+
+def get_location_all():
+    c = db.cursor()
+    location = c.execute("select geography from avocadoData").fetchall()
+    c.close()
+    return location
