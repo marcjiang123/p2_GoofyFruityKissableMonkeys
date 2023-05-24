@@ -158,6 +158,15 @@ def board():
 def search():
     return render_template("search.html")
 
+@app.route("/you-lost", methods = ['GET'])
+def lost():
+    #get score from querystring
+    score = request.args.get('score')
+    #update db
+    
+
+    return render_template("lost.html", score=score)
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
