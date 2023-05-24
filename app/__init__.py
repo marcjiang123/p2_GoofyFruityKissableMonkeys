@@ -46,19 +46,20 @@ def index():
             avo_type = requestDict['convention']
 
             avo_data = json.dumps(db.get_price_range(date,location,avo_type))
-            #avo_vol = json.dumps(db.get_all_volume(location,avo_type))
+            avo_vol = json.dumps(db.get_all_volume(location,avo_type))
             print("HELLO???")
             print(avo_data)
 
-            return jsonify(loc=location, avoType=avo_type, avoPrice=avo_data)
+            return jsonify(loc=location, avoType=avo_type, avoPrice=avo_data, avoVolume = avo_vol)
 
         avo_data = json.dumps(db.get_price_range(date,location,avo_type))
         print(db.get_all_volume("Houston","organic"))
-        #avo_vol = json.dumps(db.get_all_volume(location,avo_type))
+        avo_vol = json.dumps(db.get_all_volume(location,avo_type))
+        avo_bag = json.dumps(db.get_bags(location,avo_type))
         #print("HELLO???")
         #print(avo_data)
 
-        return render_template('home.html', avoPrice = avo_data, loc = location, avo_type = avo_type)
+        return render_template('home.html', avoPrice = avo_data, loc = location, avo_type = avo_type, avoVolume = avo_vol)
     return redirect(url_for('login'))
 
 @app.route("/register", methods = ['GET', 'POST'])

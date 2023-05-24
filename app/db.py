@@ -161,7 +161,7 @@ def get_price_range(date, location, type):
 
 def get_all_volume(location,type):
     c = db.cursor()
-    start_date = "2015-01-04"
+    start_date = get_start_date(get_start_date("2020-11-29"))
     valid = True
     volume = {}
     while valid:
