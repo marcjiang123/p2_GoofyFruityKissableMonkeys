@@ -131,3 +131,16 @@ kevinW -- 2023-5-21 21:00
 marcJ -- 2023-5-21 22:00
 ------------------------------------------------
 - create methods to parse db and get data for graphs on home page (filtered by location, type)
+
+kevinW -- 2023-5-22 12:20
+------------------------------------------------
+- general bug fixing
+
+kevinW -- 2023-5-23 21:00
+------------------------------------------------
+- create higher or lower functionality and lose page
+
+kevinW -- 2023-5-23 23:00
+------------------------------------------------
+- general bug fixing
+- anything needing fixing
