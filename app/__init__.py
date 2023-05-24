@@ -1,5 +1,5 @@
 # make this neater later
-from flask import Flask, render_template, request, session, url_for, redirect
+from flask import Flask, render_template, request, session, url_for, redirect, jsonify
 from stocksymbol import StockSymbol
 import db
 import random
@@ -16,7 +16,7 @@ ss = StockSymbol('9625612b-526c-4289-af96-076826ab74a2')
 symbol_list = ss.get_symbol_list(index='SPX')
 
 @app.route("/")
-@app.route("/home")
+@app.route("/home", methods=['GET', 'POST'])
 def index():
     if 'username' in session:
 
@@ -30,21 +30,33 @@ def index():
                 break
         print(date)
 
-        location = request.args.get('place')
-        avo_type = request.args.get('convention')
+        location = "Houston"
+        avo_type = "organic"
+
         beginning_date = start_date
 
-        print(location)
-        print(avo_type)
+        if request.method == "POST":
+            print("HELLO Faiza")
 
-        if location == None:
-            print("HEAD EMPTY")
-            location = "Houston"
-            avo_type = "organic"
+            requestDict = request.form['json']
+            requestDict = json.loads(requestDict)
+
+
+            location = requestDict["place"]
+            avo_type = requestDict['convention']
+
+            avo_data = json.dumps(db.get_price_range(date,location,avo_type))
+            #avo_vol = json.dumps(db.get_all_volume(location,avo_type))
+            print("HELLO???")
+            print(avo_data)
+
+            return jsonify(loc=location, avoType=avo_type, avoPrice=avo_data)
 
         avo_data = json.dumps(db.get_price_range(date,location,avo_type))
-        print("HELLO???")
-        print(avo_data)
+        #json.dumps(db.get_all_volume("Houston","organic"))
+        #avo_vol = json.dumps(db.get_all_volume(location,avo_type))
+        #print("HELLO???")
+        #print(avo_data)
 
         return render_template('home.html', avoPrice = avo_data, loc = location, avo_type = avo_type)
     return redirect(url_for('login'))
@@ -139,7 +151,8 @@ def game():
 
 @app.route("/leaderboard", methods = ['GET'])
 def board():
-    return render_template("leaderboard.html")
+    data = db.get_leaderboard()
+    return render_template("leaderboard.html", data=data)
 
 @app.route("/search", methods = ['GET'])
 def search():
