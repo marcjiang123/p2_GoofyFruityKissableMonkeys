@@ -19,7 +19,7 @@ Our website will compare the prices of avocados to the prices of stocks. It will
 
 Each user will have to create their own account to use the website. The account will track their high score
 
-## Launch Code
+## Launch Codes
 1. Clone this repo using
 ```
 git clone git@github.com:marcjiang123/p2_GoofyFruityKissableMonkeys.git
