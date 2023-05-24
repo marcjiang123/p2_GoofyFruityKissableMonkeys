@@ -141,6 +141,7 @@ function onChangeSelectors() {
       console.log(avoPrice)
       drawPriceChart(convention, place, avoPrice);
       drawVolumeChart(avoVolume);
+      drawBagsChart(avoBaggage)
   }).catch(error => {
       console.log('error with access token req!')
   });
