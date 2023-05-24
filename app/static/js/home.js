@@ -79,7 +79,7 @@ function drawBagsChart(bagData) {
   data.addColumn('date', 'Date');
   data.addColumn('number', 'Small Bags');
   data.addColumn('number', 'Large Bags');
-  data.addColumn('number', 'Medium Bags');
+  data.addColumn('number', 'Extra Large Bags');
 
   for (var i = 0; i < dates.length; i++) {
     var date = dates[i];

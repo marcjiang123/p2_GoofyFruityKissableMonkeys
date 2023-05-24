@@ -201,6 +201,22 @@ def get_all_volume(location,type):
             break
     return volume
 
+def get_all_price(location, type):
+    c = db.cursor()
+    start_date = get_start_date(get_start_date("2020-11-29"))
+    valid = True
+    price = {}
+    while valid:
+        if start_date == None:
+            valid = False
+        prices = c.execute("SELECT avg_price from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()
+        if prices:
+            price[start_date] = prices[0]
+            start_date = get_next_date(start_date)
+        else:
+            break
+    return price
+
 def get_volume_years(location,type):
     c = db.cursor()
     start_date = "2015-01-04"

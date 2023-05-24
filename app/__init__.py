@@ -51,16 +51,16 @@ def index():
             location = requestDict["place"]
             avo_type = requestDict['convention']
 
-            avo_data = json.dumps(db.get_price_range(date,location,avo_type, False))
+            avo_data = json.dumps(db.get_all_price(location,avo_type))
             avo_vol = json.dumps(db.get_all_volume(location,avo_type))
             avo_bag = json.dumps(db.get_bags(location,avo_type))
 
             return jsonify(allplaces = allplaces, loc=location, avoType=avo_type, avoPrice=avo_data, avoVolume = avo_vol, avoBaggage = avo_bag)
 
-        avo_data = json.dumps(db.get_price_range(date,location,avo_type, False))
-        print(db.get_all_volume("Houston","organic"))
+        avo_data = json.dumps(db.get_all_price(location,avo_type))
         avo_vol = json.dumps(db.get_all_volume(location,avo_type))
         avo_bag = json.dumps(db.get_bags(location,avo_type))
+
         #print("HELLO???")
         #print(avo_data)
 
@@ -212,4 +212,4 @@ def lost():
 
 if __name__ == "__main__":
     app.debug = True
-    app.run()
+    app.run(port="5001")
