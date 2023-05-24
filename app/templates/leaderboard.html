@@ -20,7 +20,7 @@
       <tr>
         <th class="colname" scope="col">#</th>
         <th class="colname" scope="col">Username</th>
-        <th class="colname" scope="col">Score</th>
+        <th class="colname" scope="col">Highest Score</th>
       </tr>
     </thead>
     <tbody>
@@ -28,7 +28,7 @@
             <tr>
             <td>{{loop.index}}</td>
             <td>{{username}}</td>
-            <td>{{wins - losses}}</td>
+            <td>{{score}}</td>
             </tr>
             {% endfor %}
     </tbody>
