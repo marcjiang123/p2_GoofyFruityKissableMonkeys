@@ -60,7 +60,7 @@ def index():
             print("HELLO???")
             print(avo_data)
 
-            return jsonify(loc=location, avoType=avo_type, avoPrice=avo_data, avoVolume = avo_vol, avoBaggage = avo_bag)
+            return jsonify(allplaces = allplaces, loc=location, avoType=avo_type, avoPrice=avo_data, avoVolume = avo_vol, avoBaggage = avo_bag)
 
         avo_data = json.dumps(db.get_price_range(date,location,avo_type, False))
         print(db.get_all_volume("Houston","organic"))
@@ -69,7 +69,7 @@ def index():
         #print("HELLO???")
         #print(avo_data)
 
-        return render_template('home.html', avoPrice = avo_data, loc = location, avo_type = avo_type, avoVolume = avo_vol, avoBaggage = avo_bag)
+        return render_template('home.html', allplaces = allplaces, avoPrice = avo_data, loc = location, avo_type = avo_type, avoVolume = avo_vol, avoBaggage = avo_bag)
     return redirect(url_for('login'))
 
 @app.route("/register", methods = ['GET', 'POST'])
