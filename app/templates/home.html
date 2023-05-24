@@ -19,16 +19,22 @@
       
         
         <!--MAKE VALUES REFLECT URL-->
+
           <select name="place" id="place">
             <option value={{loc}}>{{loc}}</option>
-            <option value="Houston">Houston</option>
-            <option value="New York">New York</option>
+            {% for place in allplaces %}
+              <option value="{{place}}">{{place}}</option>
+            {% endfor %}
           </select>
           
           <select name="convention" id="convention">
-            <option value="{{avo_type}}">{{avo_type}}</option>
-            <option value="organic">organic</option>
-            <option value="conventional">non-organic</option>
+            {% if avo_type == "organic" %}
+              <option value="organic">organic</option>
+              <option value="conventional">non-organic</option>
+            {% else %}
+              <option value="conventional">non-organic</option>
+              <option value="organic">organic</option>
+            {% endif %}
           </select>
         
         <div class="container" id="main-chart">

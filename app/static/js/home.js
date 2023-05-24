@@ -108,9 +108,10 @@ var select2 = document.getElementById("convention");
 
 function onChangeSelectors() {
   place = select1.options[(select1.selectedIndex)].value;
-  if (place == "New") { place = "New York" };
+  console.log(place)
   convention = select2.options[select2.selectedIndex].value;
   var dataFromForm = new FormData();
+
   dataFromForm.append("json", JSON.stringify({
     place: place, 
     convention: convention, 
