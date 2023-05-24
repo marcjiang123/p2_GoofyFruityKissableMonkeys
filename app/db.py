@@ -120,7 +120,7 @@ def update_recents(username, search):
 
 def geography_sort(location, convention):
     c = db.cursor()
-    date_price = c.execute("SELECT date, avg_price, total_volume, small_bags, medium_bags, large_bags from avocadoData WHERE (geography = ?) AND (type = ?)", (str(location), str(convention))).fetchall()
+    date_price = c.execute("SELECT date, avg_price, total_volume, small_bags, large_bags, xlarge_bags from avocadoData WHERE (geography = ?) AND (type = ?)", (str(location), str(convention))).fetchall()
     c.close()
     return date_price
 
@@ -186,7 +186,6 @@ def get_all_volume(location,type):
     while valid:
         if start_date == None:
             valid = False
-        print(str(start_date), location, type)
         prices = c.execute("SELECT total_volume from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()
         if prices:
             volume[start_date] = prices[0]
@@ -219,13 +218,17 @@ def get_bags(location,type):
     valid = True
     bags = [{},{},{}]
     while valid:
-        query = c.execute("SELECT small_bags, medium_bags, large_bags from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()
-        bags[0][start_date] = query[0]
-        bags[1][start_date] = query[1]
-        bags[2][start_date] = query[2]
-        start_date = get_next_date(start_date)
-        if start_date == None:
-            valid = False
+        query = c.execute("SELECT small_bags, large_bags, xlarge_bags from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()
+
+        if query:
+            bags[0][start_date] = query[0]
+            bags[1][start_date] = query[1]
+            bags[2][start_date] = query[2]
+            start_date = get_next_date(start_date)
+            if start_date == None:
+                valid = False
+        else:
+            break
     return bags
 
 def get_random_location():
@@ -244,6 +247,11 @@ def get_leaderboard():
 
 def get_location_all():
     c = db.cursor()
-    location = c.execute("select geography from avocadoData").fetchall()
+    location = c.execute("select DISTINCT geography from avocadoData").fetchall()
     c.close()
-    return location
+
+    locationsParsed = []
+    for i in location:
+        specificLocation = i[0]
+        locationsParsed.append(specificLocation)
+    return locationsParsed

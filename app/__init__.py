@@ -40,7 +40,6 @@ def index():
         beginning_date = start_date
 
         if request.method == "POST":
-            print("HELLO Faiza")
 
             requestDict = request.form['json']
             requestDict = json.loads(requestDict)
