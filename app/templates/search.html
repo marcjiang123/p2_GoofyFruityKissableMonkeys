@@ -1,21 +1,21 @@
 {% include 'navbar.html' %}
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+<body onload='drawChart({{stock|tojson}},{{stock_data}},{{avocado_data}})'>
 <main>
   <div class="container pt-4">
     <div class="d-flex mb-4">
-      <img src="https://www.freepnglogos.com/uploads/apple-logo-png/apple-logo-png-dallas-shootings-don-add-are-speech-zones-used-4.png" width="32px" height="32px" class="my-auto"/>
-      <h1 class=""> APPLE INC
+      <img src={{logo}} width="32px" height="32px" class="my-auto"/>
+      <h1 class=""> {{stock}}
       </h1>
     </div>
 
     <h5>
-    Apple inc is up 54% from 10/19/23 to 12/12/24
+    {{stock}} is {{s_change}} {{stock_change}}% from 10/19/23 to 12/12/24
     </h5>
     
     <h5>
-      Avocados are up 43% in the same timeframe
+      Avocados are {{a_change}} {{avo_change}}% in the same timeframe
     </h5>
     
     <div id="curve_chart" class="compare-graph mt-5">
@@ -23,7 +23,7 @@
     </div>
   </div>
   
-  
 </main>
+</body>
 
 <script src="../static/js/search.js"></script>

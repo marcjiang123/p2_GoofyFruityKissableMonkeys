@@ -12,14 +12,21 @@ import yfinance as yf
 app = Flask(__name__)
 app.secret_key = "hjakdskajsdflkasjdflid"
 
-ss = StockSymbol('9625612b-526c-4289-af96-076826ab74a2')
+
+wd = os.path.dirname(os.path.realpath(__file__))
+file = open(wd + "/keys/key_stocksymbol.txt", "r")
+stockKey = file.read()
+ss = StockSymbol(stockKey)
 symbol_list = ss.get_symbol_list(index='SPX')
 
 @app.route("/")
 @app.route("/home")
 def index():
-    if 'username' in session:
-        return render_template('home.html', testparam= "new Date(2021, 3, 1)")
+    if request.method == 'GET':
+        if 'username' in session:
+
+            return render_template('home.html', testparam= "new Date(2021, 3, 1)")
+    
     return redirect(url_for('login'))
 
 @app.route("/register", methods = ['GET', 'POST'])
@@ -65,7 +72,6 @@ def logout():
 @app.route("/higher-Lower", methods = ['GET', 'POST'])
 def game():
     if request.method == 'GET':
-        
         date = db.get_random_date()
         start_date = db.get_start_date(date)
     
@@ -86,7 +92,7 @@ def game():
                 date = db.get_random_date()
             else:
                 break
-        print(date)
+        #print(date)
 
         location = db.get_random_location()
         if random.randint(0,1) == 0:
@@ -113,7 +119,45 @@ def board():
 
 @app.route("/search", methods = ['GET'])
 def search():
-    return render_template("search.html")
+    stock = request.args.get('stock')
+    stock = stock.upper()
+    stock_name = next(item for item in symbol_list if item["symbol"] == stock)['longName']
+    print(stock_name)
+    stock_download = yf.download(stock, start='2019-11-01', end='2020-11-29', interval='1wk', prepost=False)
+    if stock_download.empty == True:
+        error = "Invalid stock symbol"
+        return render_template("search.html", error=error)
+    stock_download = json.loads(stock_download.to_json(orient='records'))
+    compare_price = stock_download[0]['Close']
+    stock_prices = {}
+    date = "2020-11-29"
+    start_date = db.get_start_date(db.get_start_date(date))
+    #print(start_date)
+    for day in stock_download:
+        if(start_date == "2020-11-29"):
+            stock_prices[start_date] = day['Close'] / compare_price
+            break
+        stock_prices[start_date] = day['Close'] / compare_price
+        start_date = db.get_next_date(start_date)
+    stock_prices = json.dumps(stock_prices)
+    # print(stock_prices)
+    total_avo_data = json.dumps(db.get_total_price())
+    logo = f'./static/logos/{stock}.png'
+    avoDict = json.loads(total_avo_data)
+    stockDict = json.loads(stock_prices)
+    avo_change = int((1 - round(avoDict['2020-11-29'] / avoDict['2019-12-01'],2)) * 100)
+    stock_change = int((1 - round(stockDict['2020-11-29'] / stockDict['2019-12-01'],2)) * 100)
+    a_change =""
+    s_change =""
+    if avo_change < 0:
+        a_change = "down"
+    else:
+        a_change = "up"
+    if stock_change < 0:
+        s_change = "down"
+    else:
+        s_change = "up"
+    return render_template("search.html", stock=stock_name,stock_data=stock_prices,avocado_data=total_avo_data,logo=logo,avo_change=abs(avo_change),a_change=a_change,s_change=s_change,stock_change=abs(stock_change))
 
 if __name__ == "__main__":
     app.debug = True

@@ -153,9 +153,28 @@ def get_price_range(date, location, type):
         price = c.execute("SELECT avg_price from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()
         price_change[start_date] = price[0] / compare_price
         start_date = get_next_date(start_date)
-        print(start_date)
+        #print(start_date)
         if start_date == date:
             valid = False
+    c.close()
+    return price_change
+
+def get_total_price():
+    c = db.cursor()
+    valid = True
+    start_date = get_start_date(get_start_date("2020-11-29"))
+    compare_date = start_date
+    compare_price = c.execute("SELECT avg_price from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(compare_date),"Total U.S.","conventional")).fetchone()[0]
+    price_change = {}
+    while valid:
+        if start_date == "2020-11-29":
+            price = c.execute("SELECT avg_price from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),"Total U.S.","conventional")).fetchone()
+            price_change[start_date] = price[0] / compare_price
+            break
+        price = c.execute("SELECT avg_price from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),"Total U.S.","conventional")).fetchone()
+        price_change[start_date] = price[0] / compare_price
+        start_date = get_next_date(start_date)
+        #print(start_date)
     c.close()
     return price_change
 
@@ -167,8 +186,6 @@ def get_all_volume(location,type):
     while valid:
         volume[start_date] = c.execute("SELECT total_volume from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()[0]
         start_date = get_next_date(start_date)
-        if start_date == None:
-            valid = False
     return volume
 
 def get_volume_years(location,type):
