@@ -144,3 +144,8 @@ kevinW -- 2023-5-23 23:00
 ------------------------------------------------
 - general bug fixing
 - anything needing fixing
+
+gordonM -- 2023-5-23 23:37
+------------------------------------------------
+- changed db tables
+- made db funcs
