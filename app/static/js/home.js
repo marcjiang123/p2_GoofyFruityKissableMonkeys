@@ -30,7 +30,7 @@ function drawPriceChart(avocado_type, location, avoData) {
   }
 
   var options = {
-    title: 'AVOCADO PRICES: ' + avocado_type + 'in ' + location,
+    title: 'AVOCADO PRICES: ',
     curveType: 'function',
     colors: ['#AA471F'],
     legend: { position: 'bottom' },
