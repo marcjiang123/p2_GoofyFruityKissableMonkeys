@@ -193,11 +193,11 @@ def search():
     stock_change = int((1 - round(stockDict['2020-11-29'] / stockDict['2019-12-01'],2)) * 100)
     a_change =""
     s_change =""
-    if avo_change < 0:
+    if avo_change > 0:
         a_change = "down"
     else:
         a_change = "up"
-    if stock_change < 0:
+    if stock_change > 0:
         s_change = "down"
     else:
         s_change = "up"
