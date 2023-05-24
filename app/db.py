@@ -235,4 +235,5 @@ def get_location_all():
     for i in location:
         specificLocation = i[0]
         locationsParsed.append(specificLocation)
+    
     return locationsParsed

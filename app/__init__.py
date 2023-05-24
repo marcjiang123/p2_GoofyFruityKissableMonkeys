@@ -33,6 +33,10 @@ def index():
         location = "Houston"
         avo_type = "organic"
 
+        allplaces = db.get_location_all()
+        allplaces.remove(location)
+        allplaces.remove("geography")
+        
         beginning_date = start_date
 
         if request.method == "POST":
@@ -58,7 +62,7 @@ def index():
         #print("HELLO???")
         #print(avo_data)
 
-        return render_template('home.html', avoPrice = avo_data, loc = location, avo_type = avo_type, avoVolume = avo_vol)
+        return render_template('home.html', allplaces= allplaces, avoPrice = avo_data, loc = location, avo_type = avo_type, avoVolume = avo_vol)
     return redirect(url_for('login'))
 
 @app.route("/register", methods = ['GET', 'POST'])
