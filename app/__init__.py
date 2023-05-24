@@ -22,6 +22,8 @@ symbol_list = ss.get_symbol_list(index='SPX')
 @app.route("/")
 @app.route("/home", methods=['GET', 'POST'])
 def index():
+    print(session.get("username"))
+    print("hi")
     if 'username' in session:
 
         date = "2015-01-04"
@@ -207,7 +209,8 @@ def search():
 def lost():
     #get score from querystring
     score = int(request.args.get('score'))
-    db.update_win_lose(session["username"], score)
+    print(session.get("username"))
+    db.update_win_lose(session.get("username"), score)
 
     return render_template("lost.html", score=score)
 

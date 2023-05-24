@@ -49,7 +49,7 @@ async function whenClicked(stock,avocado_data,stock_data, location, avocado_type
   var right = determineRightWrong(avocado, avocado_data, stock_data);
   const urlParams = new URLSearchParams(window.location.search);
   const score = urlParams.get('score');
-  console.log(avocado)
+
   if (right) {
     alert("You got it right!")
     if (score == null) {

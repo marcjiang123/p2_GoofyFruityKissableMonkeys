@@ -73,6 +73,7 @@ def get_date():
 #print(get_date()[0][1]) #prints price
 
 def update_win_lose(username, result):
+
     c = db.cursor()
     old_score = c.execute("SELECT score from userbase where (username = ?)", (str(username),)).fetchone()
     if (old_score >= result):
