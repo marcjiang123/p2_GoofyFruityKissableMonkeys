@@ -49,3 +49,7 @@ pip install -r ../requirements.txt
 python3 __init__.py
 ```
 7. Open the given link in a browser and you are ready to go!
+
+OR
+
+GO TO rocksareactuallysoft.live
