@@ -1,9 +1,10 @@
 var place = "Houston";
 var conv = "Organic";
-var avoPrice = document.getElementById("avoPrice").innerHTML;
 
-var place = document.getElementById("place").innerHTML;
-var conv = document.getElementById("convention").innerHTML;
+var avoPrice = JSON.parse(document.getElementById("avoPrice").innerHTML);
+// var avoVolume = JSON.parse(document.getElementById("avoVolume").innerHTML);
+place = document.getElementById("place").innerHTML;
+conv = document.getElementById("convention").innerHTML;
 
 google.charts.load('current', {'packages':['corechart']});
 console.log("first time?")
@@ -12,11 +13,6 @@ console.log("It worked?")
 google.charts.setOnLoadCallback(drawVolumeChart);
 google.charts.setOnLoadCallback(drawBagsChart);
 
-console.log("hi")
-function test(testparam) {
-  console.log("what")
-  console.log(testparam)
-}
 
 function drawPriceChart(avocado_type, location, avoData) {
   var data = new google.visualization.DataTable();
@@ -24,10 +20,13 @@ function drawPriceChart(avocado_type, location, avoData) {
   data.addColumn('number', 'Avocado');
 
   //Loop thru the data and add said rows
-  dates = Object.keys(avoPrice)
-  console.log(dates)
-  for (i in dates) {
-    data.addRows([[new Date(dates[i]), avoData[dates[i]]]])
+  dates = Object.keys(avoPrice);
+  console.log(dates);
+  for (var i = 0; i < dates.length; i++) {
+    var date = dates[i];
+    var price = avoPrice[date];
+    data.addRow([new Date(date), price]);
+
   }
 
   var options = {
@@ -72,7 +71,7 @@ function drawVolumeChart() {
 
 
 
-function drawBagsChart() {
+function drawBagsChart(bagData) {
   var data = new google.visualization.DataTable();
   data.addColumn('date', 'Date');
   data.addColumn('number', 'Small Bags');
@@ -108,11 +107,38 @@ var select2 = document.getElementById("convention");
 
 
 function onChangeSelectors() {
-  place = select1.options[select1.selectedIndex].value;
+  place = select1.options[(select1.selectedIndex)].value;
+  if (place == "New") { place = "New York" };
   convention = select2.options[select2.selectedIndex].value;
-  var avoPrice = document.getElementById("avoPrice").innerHTML;
-  drawPriceChart(convention, place, avoPrice)
-  window.location.href = "/home" + "?place=" + place + "&convention=" + convention;
+  var dataFromForm = new FormData();
+  dataFromForm.append("json", JSON.stringify({
+    place: place, 
+    convention: convention, 
+    help: "help"
+  }) );
+  fetch('/home', {  
+    method: 'POST',
+    body: dataFromForm,
+  }).then(response => {
+    if(response.status == 200){
+        return response.json();
+    } else {
+        // handle this somehow
+    }
+  }).then(json => {
+      //console.log('Success! ' + JSON.stringify(json))
+      jsonny = JSON.stringify(json)
+      jsonny = JSON.parse(jsonny)
+      avoPrice = JSON.parse(jsonny["avoPrice"])
+      // avoVolume = JSON.parse(jsonny["avoVolume"])
+      console.log(avoPrice)
+      drawPriceChart(convention, place, avoPrice);
+      // drawVolumeChart(avoVolume);
+  }).catch(error => {
+      console.log('error with access token req!')
+  });
+  //avoPrice = JSON.parse(document.getElementById("avoPrice").innerHTML);
+  console.log(avoPrice)
 }
 
 // function onLoadSelectors() {

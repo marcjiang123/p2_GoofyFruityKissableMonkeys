@@ -18,16 +18,17 @@
         </h1>
         
         <!--MAKE VALUES REFLECT URL-->
-        <select name="place" id="place">
-          <option value={{loc}}>{{loc}}</option>
-          <option value="Houston">Houston</option>
-          <option value="New York">New York</option>
-        </select>
-        
-        <select name="convention" id="convention">
-          <option value="organic">organic</option>
-          <option value="conventional">non-organic</option>
-        </select>
+          <select name="place" id="place">
+            <option value={{loc}}>{{loc}}</option>
+            <option value="Houston">Houston</option>
+            <option value="New York">New York</option>
+          </select>
+          
+          <select name="convention" id="convention">
+            <option value="{{avo_type}}">{{avo_type}}</option>
+            <option value="organic">organic</option>
+            <option value="conventional">non-organic</option>
+          </select>
         
         <h2>
           
@@ -51,8 +52,11 @@
       <div style="display: none;" id="avoPrice">{{avoPrice}}</div>
       <div style="display: none;" id="location">{{loc}}</div>
       <div style="display: none;" id="avoType">{{avo_type}}</div>
+      <!-- <div style="display: none;" id="avoVolume">{{avoVolume}}</div> -->
       
     </main>
+
+    
     
     <script src="../static/js/home.js"></script>
   </body>
