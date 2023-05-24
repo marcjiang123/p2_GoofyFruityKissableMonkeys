@@ -3,6 +3,7 @@ var conv = "Organic";
 
 var avoPrice = JSON.parse(document.getElementById("avoPrice").innerHTML);
 var avoVolume = JSON.parse(document.getElementById("avoVolume").innerHTML);
+var avoBaggage = JSON.parse(document.getElementById("avoBaggage").innerHTML);
 place = document.getElementById("place").innerHTML;
 conv = document.getElementById("convention").innerHTML;
 
@@ -77,15 +78,17 @@ function drawBagsChart(bagData) {
   var data = new google.visualization.DataTable();
   data.addColumn('date', 'Date');
   data.addColumn('number', 'Small Bags');
-  data.addColumn('number', 'Medium Bags');
   data.addColumn('number', 'Large Bags');
+  data.addColumn('number', 'Medium Bags');
 
-  data.addRows([
-    [new Date (2016, 8, 6), 2.3, 5, 4],
-    [new Date (2016, 8, 13), 6.43, 2, 1],
-    [new Date (2016, 8, 20), 4, 3, 3],
-    [new Date (2016, 8, 27), 5, 4, 3],
-  ]);
+  for (var i = 0; i < dates.length; i++) {
+    var date = dates[i];
+    var small = avoBaggage[0][date];
+    var large = avoBaggage[1][date];
+    var extralarge = avoBaggage[2][date];
+    data.addRow([new Date(date), small, large, extralarge]);
+
+  }
 
   var options = {
     title: 'AVOCADO BAGS',
@@ -134,6 +137,7 @@ function onChangeSelectors() {
       jsonny = JSON.parse(jsonny)
       avoPrice = JSON.parse(jsonny["avoPrice"])
       avoVolume = JSON.parse(jsonny["avoVolume"])
+      avoBaggage = JSON.parse(jsonny["avoBaggage"])
       console.log(avoPrice)
       drawPriceChart(convention, place, avoPrice);
       drawVolumeChart(avoVolume);
