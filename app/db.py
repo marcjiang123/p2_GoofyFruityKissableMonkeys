@@ -153,15 +153,16 @@ def get_price_range(date, location, type, percentage = True):
     while valid:
         price = c.execute("SELECT avg_price from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()
         
-        if percentage:
-            price_change[start_date] = price[0] / compare_price
-        else:
-            price_change[start_date] = price[0]
-            
-        start_date = get_next_date(start_date)
-        #print(start_date)
-        if start_date == date:
-            valid = False
+        if price:
+            if percentage:
+                price_change[start_date] = price[0] / compare_price
+            else:
+                price_change[start_date] = price[0]
+                
+            start_date = get_next_date(start_date)
+            #print(start_date)
+            if start_date == date:
+                valid = False
     c.close()
     return price_change
 
