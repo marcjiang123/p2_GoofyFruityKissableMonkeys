@@ -167,8 +167,13 @@ def get_all_volume(location,type):
     while valid:
         if start_date == None:
             valid = False
-        volume[start_date] = c.execute("SELECT total_volume from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()[0]
-        start_date = get_next_date(start_date)
+        print(str(start_date), location, type)
+        prices = c.execute("SELECT total_volume from avocadoData WHERE (date = ?) AND (geography = ?) AND (type = ?)", (str(start_date),location,type)).fetchone()
+        if prices:
+            volume[start_date] = prices[0]
+            start_date = get_next_date(start_date)
+        else:
+            break
     return volume
 
 def get_volume_years(location,type):

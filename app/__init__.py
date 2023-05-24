@@ -53,7 +53,7 @@ def index():
             return jsonify(loc=location, avoType=avo_type, avoPrice=avo_data)
 
         avo_data = json.dumps(db.get_price_range(date,location,avo_type))
-        #json.dumps(db.get_all_volume("Houston","organic"))
+        print(db.get_all_volume("Houston","organic"))
         #avo_vol = json.dumps(db.get_all_volume(location,avo_type))
         #print("HELLO???")
         #print(avo_data)
@@ -163,7 +163,7 @@ def lost():
     #get score from querystring
     score = request.args.get('score')
     #update db
-    
+
 
     return render_template("lost.html", score=score)
 
