@@ -149,3 +149,9 @@ gordonM -- 2023-5-23 23:37
 ------------------------------------------------
 - changed db tables
 - made db funcs
+
+marcJ -- 2023-5-23 23:50
+------------------------------------------------
+- implemented search page to display correct data
+- update design doc
+- fixed bugs in methods to get data
