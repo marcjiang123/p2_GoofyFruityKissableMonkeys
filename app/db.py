@@ -16,7 +16,7 @@ CREATE TABLE if not exists avocadoData(date date, avg_price real, total_volume r
 total_bags real, small_bags real, large_bags real, xlarge_bags real, type text, year int, geography text);
 CREATE TABLE if not exists stonks(ticker text, company_name text, short_name text, industry text, description text, website text, logo text,
 ceo text, exchange text, market_cap int);
-INSERT into userbase values("avocado","avocado",0,0,"[]");
+INSERT into userbase values("avocado","avocado", 20,"[]");
 """)
 c.close()
 
@@ -33,7 +33,7 @@ def user_exists(username):
 
 def add_user(username, password):
     c = db.cursor()
-    c.execute("Insert into userbase values(?,?,?,?,?)", (str(username), str(password),0,0,""))
+    c.execute("Insert into userbase values(?,?,?,?)", (str(username), str(password),0,""))
     db.commit()
     c.close()
 
