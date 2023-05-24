@@ -53,3 +53,17 @@ python3 __init__.py
 OR
 
 GO TO [rocksareactuallysoft.live](http://rocksareactuallysoft.live)
+
+## APIs
+
+[Stock Symbol API](https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_stocksymbol.md)
+
+## Data
+
+### Description
+
+1) Sales and prices of avocados from ~2015-2020. Includes many cities and statistics like total volume sold or total # of bags sold
+
+### Source
+
+[https://www.kaggle.com/datasets/timmate/avocado-prices-2020](https://www.kaggle.com/datasets/timmate/avocado-prices-2020)
