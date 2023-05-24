@@ -52,4 +52,4 @@ python3 __init__.py
 
 OR
 
-GO TO (rocksareactuallysoft.live)[]
+GO TO [rocksareactuallysoft.live]
