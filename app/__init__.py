@@ -162,9 +162,8 @@ def search():
 @app.route("/you-lost", methods = ['GET'])
 def lost():
     #get score from querystring
-    score = request.args.get('score')
-    #update db
-
+    score = int(request.args.get('score'))
+    update_win_lose(session["username"], score)
 
     return render_template("lost.html", score=score)
 
